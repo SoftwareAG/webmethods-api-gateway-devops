@@ -1,0 +1,16 @@
+{
+  "id": "f313be5f-2640-22f7-36b6-3e79bbadc9e2",
+  "name": "projectPetstore",
+  "values": [
+    {
+      "enabled": true,
+      "key": "promotion_data",
+      "value": "{\"api\": [\"4ea2dcf0-66c5-469b-b822-fe4707c6f899\"]}",
+      "type": "text"
+    }
+  ],
+  "timestamp": 1587036498482,
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2020-04-16T11:32:40.730Z",
+  "_postman_exported_using": "Postman/5.5.5"
+}

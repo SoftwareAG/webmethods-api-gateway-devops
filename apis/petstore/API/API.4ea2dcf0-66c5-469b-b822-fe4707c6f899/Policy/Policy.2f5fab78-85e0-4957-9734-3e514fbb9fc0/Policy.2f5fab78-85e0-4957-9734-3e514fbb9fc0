@@ -1,0 +1,31 @@
+{
+  "id" : "2f5fab78-85e0-4957-9734-3e514fbb9fc0",
+  "names" : [ {
+    "value" : "Default Policy for API Swagger Petstore",
+    "locale" : "English"
+  } ],
+  "descriptions" : [ {
+    "value" : "",
+    "locale" : "English"
+  } ],
+  "scope" : {
+    "scopeConditions" : [ ]
+  },
+  "policyEnforcements" : [ {
+    "enforcements" : [ {
+      "enforcementObjectId" : "badb55e8-2c9e-4844-bcc2-34f4834ca935",
+      "order" : "0"
+    } ],
+    "stageKey" : "routing"
+  }, {
+    "enforcements" : [ {
+      "enforcementObjectId" : "f99da7fd-d6ca-47fe-8f6b-706e3bac0b2a",
+      "order" : "0"
+    } ],
+    "stageKey" : "transport"
+  } ],
+  "policyScope" : "SERVICE",
+  "global" : false,
+  "active" : false,
+  "systemPolicy" : false
+}

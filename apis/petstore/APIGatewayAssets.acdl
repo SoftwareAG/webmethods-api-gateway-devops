@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<asset_composite name="APIGatewayAssets" displayName="Assets for API Gateway" runtimeVersion="10.5" targetNamespace="http://namespaces.softwareag.com/webMethods/APIGateway" xmlns="http://namespaces.softwareag.com/acdl/1.0" xmlns:EDA="http://namespaces.softwareag.com/webMethods/EDA" xmlns:MWS="http://namespaces.softwareag.com/webMethods/MWS" xmlns:IS="http://namespaces.softwareag.com/webMethods/IS" xmlns:APIPORTAL="http://namespaces.softwareag.com/webMethods/APIPORTAL" xmlns:AgileApps="http://namespaces.softwareag.com/webMethods/AgileApps" xmlns:BROKER="http://namespaces.softwareag.com/webMethods/BROKER" xmlns:implDetails="http://namespaces.softwareag.com/acdl/implDetails" xmlns:UniversalMessaging="http://namespaces.softwareag.com/webMethods/UniversalMessaging" xmlns:TN="http://namespaces.softwareag.com/webMethods/TN" xmlns:RULES="http://namespaces.softwareag.com/webMethods/RULES" xmlns:BPM="http://namespaces.softwareag.com/webMethods/BPM" xmlns:Optimize="http://namespaces.softwareag.com/webMethods/Optimize">
+    <buildInfo name="BuildTimestamp" value="2020-04-21T07:46:58"/>
+    <asset name="API.4ea2dcf0-66c5-469b-b822-fe4707c6f899" displayName="Swagger Petstore[1.0.5]" isDeployable="true">
+        <implementation.generic type="API"/>
+        <dependsOn>APIGateway:Policy.2f5fab78-85e0-4957-9734-3e514fbb9fc0</dependsOn>
+    </asset>
+    <asset name="Policy.2f5fab78-85e0-4957-9734-3e514fbb9fc0" displayName="Policy For API Swagger Petstore[1.0.5]" isDeployable="true">
+        <implementation.generic type="Policy"/>
+        <dependsOn>APIGateway:PolicyAction.badb55e8-2c9e-4844-bcc2-34f4834ca935</dependsOn>
+        <dependsOn>APIGateway:PolicyAction.f99da7fd-d6ca-47fe-8f6b-706e3bac0b2a</dependsOn>
+    </asset>
+    <asset name="PolicyAction.badb55e8-2c9e-4844-bcc2-34f4834ca935" displayName="Policy Action [Straight Through Routing] -&gt; Policy For API Swagger Petstore[1.0.5]" isDeployable="true">
+        <implementation.generic type="PolicyAction"/>
+        <dependsOn>APIGateway:Alias.a593c88b-4e0a-4e4e-85ec-7e19d90ca332</dependsOn>
+    </asset>
+    <asset name="Alias.a593c88b-4e0a-4e4e-85ec-7e19d90ca332" displayName="PetStore_Routing_Alias" isDeployable="true">
+        <implementation.generic type="Alias"/>
+        <property name="value for Simple alias PetStore_Routing_Alias" many="false" isSecure="false" displayName="value for Simple alias PetStore_Routing_Alias">
+            <value>https://petstore.swagger.io/v2/${sys:resource_path}</value>
+        </property>
+    </asset>
+    <asset name="PolicyAction.f99da7fd-d6ca-47fe-8f6b-706e3bac0b2a" displayName="Policy Action [Enable HTTP / HTTPS] -&gt; Policy For API Swagger Petstore[1.0.5]" isDeployable="true">
+        <implementation.generic type="PolicyAction"/>
+    </asset>
+</asset_composite>

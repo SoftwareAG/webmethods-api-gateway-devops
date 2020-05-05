@@ -1,0 +1,25 @@
+{
+  "id" : "381bdf6c-972c-4be9-bda2-3bd76f78d49c",
+  "names" : [ {
+    "value" : "Identify & Authorize Application",
+    "locale" : "en"
+  } ],
+  "templateKey" : "evaluatePolicy",
+  "parameters" : [ {
+    "templateKey" : "logicalConnector",
+    "values" : [ "OR" ]
+  }, {
+    "templateKey" : "allowAnonymous",
+    "values" : [ "true" ]
+  }, {
+    "templateKey" : "IdentificationRule",
+    "parameters" : [ {
+      "templateKey" : "applicationLookup",
+      "values" : [ "strict" ]
+    }, {
+      "templateKey" : "identificationType",
+      "values" : [ "apiKey" ]
+    } ]
+  } ],
+  "active" : false
+}
