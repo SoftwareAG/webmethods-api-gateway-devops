@@ -1,0 +1,90 @@
+##############################################################################
+##
+## Ping an API Gateway Server.
+## Usage: ping_apigateway_server <TODO>
+##############################################################################
+ping_apigateway_server() {
+
+	SERVER=$1
+	PAUSE=$2
+	ITERATIONS=$3
+	HEALTH_URL=rest/apigateway/health
+
+	while true 
+	do
+		if [ $ITERATIONS -eq 0 ]
+		then
+			return 0
+		fi
+		curl -sSf $SERVER/$HEALTH_URL > /dev/null 2>&1
+		CS=$?
+		if [ $CS -ne 0 ]
+		then
+			echo "$SERVER is down"
+			((ITERATIONS=ITERATIONS-1))
+		elif [ $CS -eq 0 ]
+		then
+			return 1
+		fi
+		sleep $PAUSE
+	done
+}
+
+##############################################################################
+## Import an API to the API Gateway Server.
+## Usage: import_api <TODO> 
+##############################################################################
+import_api() {
+
+	api_project=$1
+	url=$2
+	username=$3
+	password=$4
+	BIN_DIR="$PWD"
+	CURR_DIR="../"
+	API_DIR=$CURR_DIR/apis/$api_project
+	
+	if [ -d "$API_DIR" ] 
+	then
+		cd $API_DIR && zip -r $CURR_DIR/$api_project.zip ./*
+		curl -i -X POST $url/rest/apigateway/archive?overwrite=* -H "Content-Type:application/zip" -H"Accept:application/json" --data-binary @"$CURR_DIR/$api_project.zip" -u $username:$password
+		rm $CURR_DIR/$api_project.zip
+	else
+		echo "The API with name $api does not exists in the flat file."
+	fi
+	cd $BIN_DIR
+}
+##############################################################################
+## Export an API from the API Gateway Server.
+## Usage: import_api <TODO>
+##############################################################################
+export_api() {
+	api_project=$1
+	url=$2
+	username=$3
+	password=$4
+	BIN_DIR="$PWD"
+	CURR_DIR="../"
+	API_DIR=$CURR_DIR/apis/$api_project
+	
+	if [ -d "$API_DIR" ] 
+	then
+	curl $url/rest/apigateway/archive -d @"$API_DIR/export_payload.json" --output $CURR_DIR/$api_project.zip -u $username:$password -H "x-HTTP-Method-Override:GET" -H "Content-Type:application/json"
+	unzip -o $CURR_DIR/$api_project.zip -d $API_DIR/
+	rm $CURR_DIR/$api_project.zip
+	else
+	echo "The API with name $api does not exists in the flat file."
+	fi
+}
+##############################################################################
+## Run tests pointing to a postman collection
+## 
+##############################################################################
+run_test() {
+ test_collection=$1
+ environment_file=$2
+ 
+ echo "Running postman tests"
+ newman run $test_collection  --reporters cli,junit --reporter-junit-export Results/junitReport.xml -e $environment_file
+}
+

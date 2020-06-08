@@ -1,0 +1,4 @@
+apigw_cluster_tsaUrls=terracotta_server:9510
+apigw_terracotta_license_filename=terracotta-license.key
+apigw_discovery_zen_ping_unicast_hosts=server1:9340,server2:9340,server3:9340
+apigw_cluster_initialMasterNodes=server1,server2,server3

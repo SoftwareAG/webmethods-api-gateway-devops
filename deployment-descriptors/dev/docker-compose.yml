@@ -1,0 +1,16 @@
+version: "3.4"
+services:
+  qaimage:
+   image: "${apigateway_image}"
+   ports:
+    - "${apigateway_server_port}:5555"
+    - "${apigateway_ui_port}:9072"
+    - "${apigateway_es_port}:9240"
+   networks:
+    - apigw
+   environment:
+    - "LANG=en_US.UTF-8"
+    - "LANGUAGE=en_US:en"
+    - "LC_ALL=en_US.UTF-8"
+networks:
+   apigw:
