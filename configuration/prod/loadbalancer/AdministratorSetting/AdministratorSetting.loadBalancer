@@ -1,0 +1,10 @@
+{
+  "configId" : "loadBalancer",
+  "internalPorts" : { },
+  "properties" : {
+    "webAppUrl" : "",
+    "websocketUrls" : [ ],
+    "httpsUrls" : [ ],
+    "httpUrls" : [ ]
+  }
+}

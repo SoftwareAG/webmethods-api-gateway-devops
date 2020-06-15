@@ -1,0 +1,201 @@
+{
+  "apiDefinition" : {
+    "info" : {
+      "description" : "This is a simple API",
+      "version" : "1.0.0",
+      "title" : "Simple Inventory API",
+      "contact" : {
+        "email" : "you@your-company.com"
+      },
+      "license" : {
+        "name" : "Apache 2.0",
+        "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+      }
+    },
+    "tags" : [ {
+      "name" : "admins",
+      "description" : "Secured Admin-only calls"
+    }, {
+      "name" : "developers",
+      "description" : "Operations available to regular developers"
+    } ],
+    "schemes" : [ ],
+    "security" : [ ],
+    "paths" : {
+      "/inventory" : {
+        "get" : {
+          "tags" : [ "developers" ],
+          "summary" : "searches inventory",
+          "description" : "By passing in the appropriate options, you can search for\navailable inventory in the system\n",
+          "operationId" : "searchInventory",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "searchString",
+            "in" : "query",
+            "description" : "pass an optional search string for looking up inventory",
+            "required" : false,
+            "style" : "FORM",
+            "explode" : true,
+            "parameterSchema" : {
+              "type" : "string"
+            }
+          }, {
+            "name" : "skip",
+            "in" : "query",
+            "description" : "number of records to skip for pagination",
+            "required" : false,
+            "style" : "FORM",
+            "explode" : true,
+            "parameterSchema" : {
+              "minimum" : 0,
+              "type" : "integer",
+              "format" : "int32"
+            }
+          }, {
+            "name" : "limit",
+            "in" : "query",
+            "description" : "maximum number of records to return",
+            "required" : false,
+            "style" : "FORM",
+            "explode" : true,
+            "parameterSchema" : {
+              "maximum" : 50,
+              "minimum" : 0,
+              "type" : "integer",
+              "format" : "int32"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "search results matching criteria",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "$ref" : "#/components/schemas/InventoryItem"
+                    }
+                  }
+                }
+              }
+            },
+            "400" : {
+              "description" : "bad input parameter"
+            }
+          },
+          "enabled" : true
+        },
+        "post" : {
+          "tags" : [ "admins" ],
+          "summary" : "adds an inventory item",
+          "description" : "Adds an item to the system",
+          "operationId" : "addInventory",
+          "consumes" : [ "application/json" ],
+          "responses" : {
+            "201" : {
+              "description" : "item created"
+            },
+            "400" : {
+              "description" : "invalid input, object invalid"
+            },
+            "409" : {
+              "description" : "an existing item already exists"
+            }
+          },
+          "enabled" : true,
+          "requestBody" : {
+            "description" : "Inventory item to add",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "$ref" : "#/components/schemas/InventoryItem"
+                }
+              }
+            }
+          }
+        },
+        "enabled" : true
+      }
+    },
+    "securityDefinitions" : { },
+    "definitions" : { },
+    "baseUriParameters" : [ ],
+    "externalDocs" : [ ],
+    "servers" : [ {
+      "url" : "https://virtserver.swaggerhub.com/jcarcaya/testing/1.0.0",
+      "description" : "SwaggerHub API Auto Mocking"
+    } ],
+    "components" : {
+      "schemas" : {
+        "InventoryItem" : {
+          "required" : [ "id", "manufacturer", "name", "releaseDate" ],
+          "type" : "object",
+          "properties" : {
+            "releaseDate" : {
+              "type" : "string",
+              "format" : "int32",
+              "example" : "2016-08-29T09:12:33.001Z"
+            },
+            "name" : {
+              "type" : "string",
+              "example" : "Widget Adapter"
+            },
+            "id" : {
+              "type" : "string",
+              "format" : "uuid",
+              "example" : "\"d290f1ee-6c54-4b01-90e6-d701748f0851\""
+            },
+            "manufacturer" : {
+              "type" : "object",
+              "$ref" : "#/components/schemas/Manufacturer"
+            }
+          }
+        },
+        "Manufacturer" : {
+          "required" : [ "name" ],
+          "type" : "object",
+          "properties" : {
+            "phone" : {
+              "type" : "string",
+              "example" : "408-867-5309"
+            },
+            "name" : {
+              "type" : "string",
+              "example" : "ACME Corporation"
+            },
+            "homePage" : {
+              "type" : "string",
+              "format" : "url",
+              "example" : "https://www.acme-corp.com"
+            }
+          }
+        }
+      }
+    },
+    "type" : "rest"
+  },
+  "nativeEndpoint" : [ {
+    "passSecurityHeaders" : true,
+    "uri" : "https://virtserver.swaggerhub.com/jcarcaya/testing/1.0.0",
+    "connectionTimeoutDuration" : 0,
+    "alias" : false
+  } ],
+  "apiName" : "Simple Inventory API",
+  "apiVersion" : "1.0.0",
+  "apiDescription" : "This is a simple API",
+  "maturityState" : "Beta",
+  "isActive" : false,
+  "type" : "REST",
+  "owner" : "Administrator",
+  "policies" : [ "9a167b6b-18d0-4706-90f0-38eeb97efba4" ],
+  "referencedFiles" : {
+    "jcarcaya_testing_1.0.0_swagger.json" : "{\n  \"openapi\" : \"3.0.0\",\n  \"servers\" : [ {\n    \"description\" : \"SwaggerHub API Auto Mocking\",\n    \"url\" : \"https://virtserver.swaggerhub.com/jcarcaya/testing/1.0.0\"\n  } ],\n  \"info\" : {\n    \"description\" : \"This is a simple API\",\n    \"version\" : \"1.0.0\",\n    \"title\" : \"Simple Inventory API\",\n    \"contact\" : {\n      \"email\" : \"you@your-company.com\"\n    },\n    \"license\" : {\n      \"name\" : \"Apache 2.0\",\n      \"url\" : \"http://www.apache.org/licenses/LICENSE-2.0.html\"\n    }\n  },\n  \"tags\" : [ {\n    \"name\" : \"admins\",\n    \"description\" : \"Secured Admin-only calls\"\n  }, {\n    \"name\" : \"developers\",\n    \"description\" : \"Operations available to regular developers\"\n  } ],\n  \"paths\" : {\n    \"/inventory\" : {\n      \"get\" : {\n        \"tags\" : [ \"developers\" ],\n        \"summary\" : \"searches inventory\",\n        \"operationId\" : \"searchInventory\",\n        \"description\" : \"By passing in the appropriate options, you can search for\\navailable inventory in the system\\n\",\n        \"parameters\" : [ {\n          \"in\" : \"query\",\n          \"name\" : \"searchString\",\n          \"description\" : \"pass an optional search string for looking up inventory\",\n          \"required\" : false,\n          \"schema\" : {\n            \"type\" : \"string\"\n          }\n        }, {\n          \"in\" : \"query\",\n          \"name\" : \"skip\",\n          \"description\" : \"number of records to skip for pagination\",\n          \"schema\" : {\n            \"type\" : \"integer\",\n            \"format\" : \"int32\",\n            \"minimum\" : 0\n          }\n        }, {\n          \"in\" : \"query\",\n          \"name\" : \"limit\",\n          \"description\" : \"maximum number of records to return\",\n          \"schema\" : {\n            \"type\" : \"integer\",\n            \"format\" : \"int32\",\n            \"minimum\" : 0,\n            \"maximum\" : 50\n          }\n        } ],\n        \"responses\" : {\n          \"200\" : {\n            \"description\" : \"search results matching criteria\",\n            \"content\" : {\n              \"application/json\" : {\n                \"schema\" : {\n                  \"type\" : \"array\",\n                  \"items\" : {\n                    \"$ref\" : \"#/components/schemas/InventoryItem\"\n                  }\n                }\n              }\n            }\n          },\n          \"400\" : {\n            \"description\" : \"bad input parameter\"\n          }\n        }\n      },\n      \"post\" : {\n        \"tags\" : [ \"admins\" ],\n        \"summary\" : \"adds an inventory item\",\n        \"operationId\" : \"addInventory\",\n        \"description\" : \"Adds an item to the system\",\n        \"responses\" : {\n          \"201\" : {\n            \"description\" : \"item created\"\n          },\n          \"400\" : {\n            \"description\" : \"invalid input, object invalid\"\n          },\n          \"409\" : {\n            \"description\" : \"an existing item already exists\"\n          }\n        },\n        \"requestBody\" : {\n          \"content\" : {\n            \"application/json\" : {\n              \"schema\" : {\n                \"$ref\" : \"#/components/schemas/InventoryItem\"\n              }\n            }\n          },\n          \"description\" : \"Inventory item to add\"\n        }\n      }\n    }\n  },\n  \"components\" : {\n    \"schemas\" : {\n      \"InventoryItem\" : {\n        \"type\" : \"object\",\n        \"required\" : [ \"id\", \"name\", \"manufacturer\", \"releaseDate\" ],\n        \"properties\" : {\n          \"id\" : {\n            \"type\" : \"string\",\n            \"format\" : \"uuid\",\n            \"example\" : \"d290f1ee-6c54-4b01-90e6-d701748f0851\"\n          },\n          \"name\" : {\n            \"type\" : \"string\",\n            \"example\" : \"Widget Adapter\"\n          },\n          \"releaseDate\" : {\n            \"type\" : \"string\",\n            \"format\" : \"int32\",\n            \"example\" : \"2016-08-29T09:12:33.001Z\"\n          },\n          \"manufacturer\" : {\n            \"$ref\" : \"#/components/schemas/Manufacturer\"\n          }\n        }\n      },\n      \"Manufacturer\" : {\n        \"required\" : [ \"name\" ],\n        \"properties\" : {\n          \"name\" : {\n            \"type\" : \"string\",\n            \"example\" : \"ACME Corporation\"\n          },\n          \"homePage\" : {\n            \"type\" : \"string\",\n            \"format\" : \"url\",\n            \"example\" : \"https://www.acme-corp.com\"\n          },\n          \"phone\" : {\n            \"type\" : \"string\",\n            \"example\" : \"408-867-5309\"\n          }\n        },\n        \"type\" : \"object\"\n      }\n    }\n  }\n}\n"
+  },
+  "scopes" : [ ],
+  "publishedPortals" : [ ],
+  "creationDate" : "2020-06-14 13:57:16 GMT",
+  "systemVersion" : 1,
+  "id" : "fda68651-439d-4489-8368-df4226c99d90"
+}

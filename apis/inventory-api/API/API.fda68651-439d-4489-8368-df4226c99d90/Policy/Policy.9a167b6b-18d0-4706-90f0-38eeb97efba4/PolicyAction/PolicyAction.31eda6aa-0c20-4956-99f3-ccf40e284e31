@@ -1,0 +1,17 @@
+{
+  "id" : "31eda6aa-0c20-4956-99f3-ccf40e284e31",
+  "names" : [ {
+    "value" : "Straight Through Routing",
+    "locale" : "en"
+  } ],
+  "descriptions" : [ {
+    "value" : "",
+    "locale" : "English"
+  } ],
+  "templateKey" : "straightThroughRouting",
+  "parameters" : [ {
+    "templateKey" : "endpointUri",
+    "values" : [ "https://virtserver.swaggerhub.com/jcarcaya/testing/1.0.0/${sys:resource_path}" ]
+  } ],
+  "active" : false
+}

@@ -3,9 +3,9 @@ services:
   load_balancer:
     image: nginx
     ports:
-      - "5555:5555"
-      - "9072:9072"
-      - "9240:9240"
+      - "${apigateway_server_port}:5555"
+      - "${apigateway_ui_port}:9072"
+      - "${apigateway_es_port}:9240"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     networks:

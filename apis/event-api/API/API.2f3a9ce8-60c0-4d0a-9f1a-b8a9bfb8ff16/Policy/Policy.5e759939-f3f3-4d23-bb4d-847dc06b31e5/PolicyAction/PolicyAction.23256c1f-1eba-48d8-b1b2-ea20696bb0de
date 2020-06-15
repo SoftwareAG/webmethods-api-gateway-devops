@@ -1,0 +1,17 @@
+{
+  "id" : "23256c1f-1eba-48d8-b1b2-ea20696bb0de",
+  "names" : [ {
+    "value" : "Straight Through Routing",
+    "locale" : "en"
+  } ],
+  "descriptions" : [ {
+    "value" : "",
+    "locale" : "English"
+  } ],
+  "templateKey" : "straightThroughRouting",
+  "parameters" : [ {
+    "templateKey" : "endpointUri",
+    "values" : [ "https://virtserver.swaggerhub.com/Eindhoven-Airport/EventAPI/1.0/${sys:resource_path}" ]
+  } ],
+  "active" : false
+}

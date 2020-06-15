@@ -32,7 +32,7 @@ ping_apigateway_server() {
 
 ##############################################################################
 ## Import an API to the API Gateway Server.
-## Usage: import_api <TODO> 
+## Usage: import_api <api_project> <url> <username> <password>
 ##############################################################################
 import_api() {
 
@@ -47,16 +47,40 @@ import_api() {
 	if [ -d "$API_DIR" ] 
 	then
 		cd $API_DIR && zip -r $CURR_DIR/$api_project.zip ./*
-		curl -i -X POST $url/rest/apigateway/archive?overwrite=* -H "Content-Type:application/zip" -H"Accept:application/json" --data-binary @"$CURR_DIR/$api_project.zip" -u $username:$password
+		curl -sS -i -X POST $url/rest/apigateway/archive?overwrite=* -H "Content-Type:application/zip" -H"Accept:application/json" --data-binary @"$CURR_DIR/$api_project.zip" -u $username:$password > /dev/null
 		rm $CURR_DIR/$api_project.zip
 	else
-		echo "The API with name $api does not exists in the flat file."
+		echo "The API with name $api does not exist as a flat file."
+	fi
+	cd $BIN_DIR
+}
+##############################################################################
+## Import Configurations to the API Gateway Server.
+## Usage: import_configurations <configuration_name> <url> <username> <password>
+##############################################################################
+import_configurations() {
+
+	configuration_name=$1
+	url=$2
+	username=$3
+	password=$4
+	stage=$5
+	BIN_DIR="$PWD"
+	CURR_DIR="../"
+	CONF_DIR=$configuration_name
+	if [ -d "$CONF_DIR" ] 
+	then
+		cd $CONF_DIR && zip -r config.zip ./*
+		curl -sS -i -X POST $url/rest/apigateway/archive?overwrite=* -H "Content-Type:application/zip" -H"Accept:application/json" --data-binary @"config.zip" -u $username:$password > /dev/null
+		rm config.zip
+	else
+		echo "The Configuration with name $configuration_name does not exists as a flat file."
 	fi
 	cd $BIN_DIR
 }
 ##############################################################################
 ## Export an API from the API Gateway Server.
-## Usage: import_api <TODO>
+## Usage: export_api <api_project> <url> <username> <password>
 ##############################################################################
 export_api() {
 	api_project=$1
@@ -69,7 +93,7 @@ export_api() {
 	
 	if [ -d "$API_DIR" ] 
 	then
-	curl $url/rest/apigateway/archive -d @"$API_DIR/export_payload.json" --output $CURR_DIR/$api_project.zip -u $username:$password -H "x-HTTP-Method-Override:GET" -H "Content-Type:application/json"
+	curl -s $url/rest/apigateway/archive -d @"$API_DIR/export_payload.json" --output $CURR_DIR/$api_project.zip -u $username:$password -H "x-HTTP-Method-Override:GET" -H "Content-Type:application/json"
 	unzip -o $CURR_DIR/$api_project.zip -d $API_DIR/
 	rm $CURR_DIR/$api_project.zip
 	else
@@ -78,13 +102,53 @@ export_api() {
 }
 ##############################################################################
 ## Run tests pointing to a postman collection
-## 
+## Usage run_test <collection_name> <environment_file_location> <environment_Variables>
 ##############################################################################
 run_test() {
  test_collection=$1
  environment_file=$2
+ env_vars=$3
+ echo "Env:$env_vars"
+ newman_environment=
+ 
+ if [ ! -z "$env_vars" ]
+ then
+    split $env_vars ";"
+	echo $env_vars_array
+	for i in "${env_vars_array[@]}"  
+	do  
+		newman_environment="$newman_environment --env-var $i "
+	done  
+ fi
+ 
  
  echo "Running postman tests"
+ echo "Environment:$environment_file"
+ 
+ if [ -z "$newman_environment" ] 
+ then
  newman run $test_collection  --reporters cli,junit --reporter-junit-export Results/junitReport.xml -e $environment_file
+ else 
+ echo "newman run $test_collection  --reporters cli,junit --reporter-junit-export Results/junitReport.xml -e $environment_file $newman_environment"
+ newman run $test_collection  --reporters cli,junit --reporter-junit-export Results/junitReport.xml -e $environment_file $newman_environment
+ fi
+}
+
+##############################################################################
+## Utility method to split a input with an delimter
+## Usage split input delimiter
+## Output array of the string that is split.
+##############################################################################
+split() {
+  input=$1
+  delimiter=$2
+  string=$input$delimiter
+
+#Split the text based on the delimiter
+env_vars_array=()
+while [[ $string ]]; do
+  env_vars_array+=( "${string%%"$delimiter"*}" )
+  string=${string#*"$delimiter"}
+done
 }
 

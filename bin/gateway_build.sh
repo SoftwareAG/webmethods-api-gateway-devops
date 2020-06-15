@@ -1,7 +1,7 @@
 #!/bin/bash
 ##############################################################################
 ##
-#download#
+##
 ##
 ##############################################################################
 
@@ -17,7 +17,7 @@ test_suite=
 usage(){
 echo "Usage: $0"
 echo "args:"
-echo "--apigateway_image(*)	    The DTR for API Gateway image."
+echo "--apigateway_image	    The DTR for API Gateway image."
 echo "--apigateway_server_port  API Gateway server port.Default is 5555"
 echo "--apigateway_ui_port      API Gateway UI port.Default is 9072"
 echo "--apigateway_es_port		API Gateway Elastic search port.Default is 9240"
@@ -30,7 +30,7 @@ exit
 parseArgs(){
   while test $# -ge 1; do
     arg=$1
-    shift
+	shift
     case $arg in
 	  --apigateway_image)
         apigateway_image=${1}
@@ -57,7 +57,7 @@ parseArgs(){
 		shift
 	  ;;
 	  *)
-        echo "Unknown: $@"
+        echo "Unknown: $arg"
         usage
 		exit
       ;;
@@ -67,16 +67,14 @@ parseArgs(){
 
 main(){
 #Parseinputarguments
-parseArgs "$@"
-if [ -z "$apigateway_image" ] 
+if [ $# -ne 0 ]
 then 
-echo "apigateway_image name is missing." 
-usage
+parseArgs "$@"
 fi
 
-echo "Start the environment"
-sh gateway_setup.sh  --stage dev --apigateway_image $apigateway_image --apigateway_server_port $apigateway_server_port --apigateway_ui_port $apigateway_ui_port --apigateway_es_port $apigateway_es_port --create_new $create_new
 
+echo "Start the environment"
+sh gateway_setup.sh  --stage build --apigateway_image $apigateway_image --apigateway_server_port $apigateway_server_port --apigateway_ui_port $apigateway_ui_port --apigateway_es_port $apigateway_es_port
 
 echo "Checking the API Gateway is up" 
 ping_apigateway_server http://localhost:$apigateway_server_port 30 30
@@ -94,19 +92,17 @@ for file in ../apis/*; do
     fi
 done
 
-if [ ! -z "$test_suite" ] 
+if [ -z "$test_suite" ] 
 then
 echo "Not running the tests"
 exit
 fi
 
 echo "Running tests for API gateway"
-if [ $test_suite -eq * ] 
+if [ "$test_suite" = "*" ] 
 then 
 for file in ../tests/test-suites/*; do
-    if [ -d "$file" ]; then
-        run_test $file ../tests/environment/build_environment.json
-    fi
+    run_test $file ../tests/environment/build_environment.json "httpInvokeUrl=http://localhost:$apigateway_server_port"
 done
 exit
 fi

@@ -1,7 +1,7 @@
 #!/bin/bash
 ##############################################################################
 ##
-#download#
+##
 ##
 ##############################################################################
 . ./common.lib
@@ -16,8 +16,8 @@ usage(){
 echo "Usage: $0a rgs"
 echo "args:"
 echo "--import(or)--export  *To import or export from the flat file"
-echo "--api.name		    *The API project to import"
-echo "--apigateway.url      APIGateway url to import or export from.Default is http://localhost:5555"
+echo "--api_name		    *The API project to import"
+echo "--apigateway_url      APIGateway url to import or export from.Default is http://localhost:5555"
 echo "--username            The APIGateway username.Default is Administrator."
 echo "--password            The APIGateway password.Default is password."
 exit
@@ -29,11 +29,11 @@ parseArgs(){
     arg=$1
     shift
     case $arg in
-      --apigateway.url)
+      --apigateway_url)
         url=${1}
         shift
       ;;
-      --api.name)
+      --api_name)
         api=${1}
         shift
       ;;
@@ -68,12 +68,12 @@ main(){
 parseArgs "$@"
 if [ -z "$api" ] 
 then 
-echo "API name is missing" 
+	echo "API name is missing" 
 usage
 fi
 if [ -z "$shldDoImport" ] 
 then 
-echo "Missing what operation to do" 
+	echo "Missing what operation to do" 
 usage
 fi
 

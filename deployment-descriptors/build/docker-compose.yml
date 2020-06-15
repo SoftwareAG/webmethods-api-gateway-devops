@@ -1,6 +1,6 @@
 version: "3.4"
 services:
-  devimage:
+  buildimage:
    image: "${apigateway_image}"
    ports:
     - "${apigateway_server_port}:5555"

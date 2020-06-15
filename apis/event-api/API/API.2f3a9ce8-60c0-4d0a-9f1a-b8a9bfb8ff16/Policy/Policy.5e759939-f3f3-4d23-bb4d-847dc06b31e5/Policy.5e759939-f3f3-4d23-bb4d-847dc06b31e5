@@ -1,0 +1,26 @@
+{
+  "id" : "5e759939-f3f3-4d23-bb4d-847dc06b31e5",
+  "names" : [ {
+    "value" : "Default Policy for API EventAPI",
+    "locale" : "English"
+  } ],
+  "descriptions" : [ {
+    "value" : "",
+    "locale" : "English"
+  } ],
+  "policyEnforcements" : [ {
+    "enforcements" : [ {
+      "enforcementObjectId" : "6b61618c-f1a0-47df-94c8-5c6eefe5bc36"
+    } ],
+    "stageKey" : "transport"
+  }, {
+    "enforcements" : [ {
+      "enforcementObjectId" : "23256c1f-1eba-48d8-b1b2-ea20696bb0de"
+    } ],
+    "stageKey" : "routing"
+  } ],
+  "policyScope" : "SERVICE",
+  "global" : false,
+  "active" : false,
+  "systemPolicy" : false
+}

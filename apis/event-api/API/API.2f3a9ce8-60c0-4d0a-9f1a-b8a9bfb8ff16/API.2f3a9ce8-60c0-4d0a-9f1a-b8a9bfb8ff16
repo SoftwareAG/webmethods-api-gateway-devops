@@ -1,0 +1,205 @@
+{
+  "apiDefinition" : {
+    "info" : {
+      "description" : "Experience API, Events",
+      "version" : "1.0",
+      "title" : "EventAPI"
+    },
+    "schemes" : [ ],
+    "security" : [ {
+      "requirements" : {
+        "bearerAuth" : [ ]
+      }
+    } ],
+    "paths" : {
+      "/events" : {
+        "post" : {
+          "summary" : "Create an event",
+          "consumes" : [ "application/xml", "application/json" ],
+          "responses" : {
+            "200" : {
+              "description" : "Success"
+            },
+            "400" : {
+              "description" : "Bad request"
+            },
+            "401" : {
+              "description" : "Unauthorized"
+            }
+          },
+          "enabled" : true,
+          "requestBody" : {
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "type" : "composed",
+                  "oneOf" : [ {
+                    "type" : "object",
+                    "$ref" : "#/components/schemas/EventPassengerCreation"
+                  }, {
+                    "type" : "object",
+                    "$ref" : "#/components/schemas/EventOtherBySubjectId"
+                  } ]
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "composed",
+                  "oneOf" : [ {
+                    "type" : "object",
+                    "$ref" : "#/components/schemas/EventPassengerCreation"
+                  }, {
+                    "type" : "object",
+                    "$ref" : "#/components/schemas/EventOtherBySubjectId"
+                  } ]
+                }
+              }
+            },
+            "required" : true
+          }
+        },
+        "enabled" : true
+      }
+    },
+    "securityDefinitions" : { },
+    "definitions" : { },
+    "baseUriParameters" : [ ],
+    "externalDocs" : [ ],
+    "servers" : [ {
+      "url" : "https://virtserver.swaggerhub.com/Eindhoven-Airport/EventAPI/1.0",
+      "description" : "SwaggerHub API Auto Mocking"
+    } ],
+    "components" : {
+      "schemas" : {
+        "BoardingPass" : {
+          "type" : "object",
+          "properties" : {
+            "BarcodeData" : {
+              "type" : "string"
+            }
+          },
+          "description" : "Raw boarding pass data"
+        },
+        "EventPassengerCreation" : {
+          "type" : "object",
+          "properties" : {
+            "Action" : {
+              "type" : "string",
+              "enum" : [ "PassengerCreation" ]
+            },
+            "EventDateTime" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "ActionSubject" : {
+              "type" : "object",
+              "$ref" : "#/components/schemas/Passenger"
+            },
+            "ActionSuccess" : {
+              "type" : "boolean"
+            }
+          }
+        },
+        "PassengerId" : {
+          "type" : "object",
+          "properties" : {
+            "PassengerId" : {
+              "type" : "string"
+            }
+          },
+          "description" : "Id of a passenger that has been submitted"
+        },
+        "EventOtherBySubjectId" : {
+          "type" : "object",
+          "properties" : {
+            "Action" : {
+              "type" : "string",
+              "enum" : [ "BagDrop", "CheckIn", "SecurityFilterScan", "GateScan", "Other" ]
+            },
+            "EventDateTime" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "ActionSubject" : {
+              "type" : "composed",
+              "oneOf" : [ {
+                "type" : "object",
+                "$ref" : "#/components/schemas/BoardingPass"
+              }, {
+                "type" : "object",
+                "$ref" : "#/components/schemas/PassengerId"
+              } ]
+            },
+            "ActionSuccess" : {
+              "type" : "boolean"
+            }
+          }
+        },
+        "Passenger" : {
+          "type" : "object",
+          "properties" : {
+            "BookingReference" : {
+              "type" : "string"
+            },
+            "FlightNumber" : {
+              "type" : "string"
+            },
+            "Id" : {
+              "type" : "string"
+            },
+            "CheckInSequenceNumber" : {
+              "type" : "string"
+            },
+            "FromAirportCode" : {
+              "type" : "string"
+            },
+            "BaggageAllowance" : {
+              "type" : "object",
+              "$ref" : "#/components/schemas/BaggageAllowance"
+            }
+          }
+        },
+        "BaggageAllowance" : {
+          "type" : "object",
+          "properties" : {
+            "MaxWeight" : {
+              "type" : "integer"
+            },
+            "MaxNumberOfBags" : {
+              "type" : "integer"
+            },
+            "WeightUnit" : {
+              "type" : "string"
+            },
+            "MaxWeightPerBag" : {
+              "type" : "integer"
+            }
+          }
+        }
+      }
+    },
+    "type" : "rest"
+  },
+  "nativeEndpoint" : [ {
+    "passSecurityHeaders" : true,
+    "uri" : "https://virtserver.swaggerhub.com/Eindhoven-Airport/EventAPI/1.0",
+    "connectionTimeoutDuration" : 0,
+    "alias" : false
+  } ],
+  "apiName" : "EventAPI",
+  "apiVersion" : "1.0",
+  "apiDescription" : "Experience API, Events",
+  "maturityState" : "Beta",
+  "isActive" : false,
+  "type" : "REST",
+  "owner" : "Administrator",
+  "policies" : [ "5e759939-f3f3-4d23-bb4d-847dc06b31e5" ],
+  "referencedFiles" : {
+    "Eindhoven-Airport_EventAPI_1.0_swagger.json" : "{\n  \"openapi\" : \"3.0.0\",\n  \"info\" : {\n    \"version\" : \"1.0\",\n    \"title\" : \"EventAPI\",\n    \"description\" : \"Experience API, Events\"\n  },\n  \"paths\" : {\n    \"/events\" : {\n      \"post\" : {\n        \"summary\" : \"Create an event\",\n        \"requestBody\" : {\n          \"content\" : {\n            \"application/json\" : {\n              \"schema\" : {\n                \"oneOf\" : [ {\n                  \"$ref\" : \"#/components/schemas/EventPassengerCreation\"\n                }, {\n                  \"$ref\" : \"#/components/schemas/EventOtherBySubjectId\"\n                } ]\n              }\n            },\n            \"application/xml\" : {\n              \"schema\" : {\n                \"oneOf\" : [ {\n                  \"$ref\" : \"#/components/schemas/EventPassengerCreation\"\n                }, {\n                  \"$ref\" : \"#/components/schemas/EventOtherBySubjectId\"\n                } ]\n              }\n            }\n          },\n          \"required\" : true\n        },\n        \"responses\" : {\n          \"200\" : {\n            \"description\" : \"Success\"\n          },\n          \"400\" : {\n            \"description\" : \"Bad request\"\n          },\n          \"401\" : {\n            \"description\" : \"Unauthorized\"\n          }\n        }\n      }\n    }\n  },\n  \"security\" : [ {\n    \"bearerAuth\" : [ ]\n  } ],\n  \"components\" : {\n    \"schemas\" : {\n      \"EventPassengerCreation\" : {\n        \"type\" : \"object\",\n        \"properties\" : {\n          \"Action\" : {\n            \"type\" : \"string\",\n            \"enum\" : [ \"PassengerCreation\" ]\n          },\n          \"ActionSubject\" : {\n            \"$ref\" : \"#/components/schemas/Passenger\"\n          },\n          \"ActionSuccess\" : {\n            \"type\" : \"boolean\"\n          },\n          \"EventDateTime\" : {\n            \"type\" : \"string\",\n            \"format\" : \"date-time\"\n          }\n        }\n      },\n      \"EventOtherBySubjectId\" : {\n        \"type\" : \"object\",\n        \"properties\" : {\n          \"Action\" : {\n            \"type\" : \"string\",\n            \"enum\" : [ \"BagDrop\", \"CheckIn\", \"SecurityFilterScan\", \"GateScan\", \"Other\" ]\n          },\n          \"ActionSubject\" : {\n            \"oneOf\" : [ {\n              \"$ref\" : \"#/components/schemas/BoardingPass\"\n            }, {\n              \"$ref\" : \"#/components/schemas/PassengerId\"\n            } ]\n          },\n          \"ActionSuccess\" : {\n            \"type\" : \"boolean\"\n          },\n          \"EventDateTime\" : {\n            \"type\" : \"string\",\n            \"format\" : \"date-time\"\n          }\n        }\n      },\n      \"Passenger\" : {\n        \"type\" : \"object\",\n        \"properties\" : {\n          \"Id\" : {\n            \"type\" : \"string\"\n          },\n          \"BookingReference\" : {\n            \"type\" : \"string\"\n          },\n          \"FlightNumber\" : {\n            \"type\" : \"string\"\n          },\n          \"CheckInSequenceNumber\" : {\n            \"type\" : \"string\"\n          },\n          \"FromAirportCode\" : {\n            \"type\" : \"string\"\n          },\n          \"BaggageAllowance\" : {\n            \"$ref\" : \"#/components/schemas/BaggageAllowance\"\n          }\n        }\n      },\n      \"BaggageAllowance\" : {\n        \"type\" : \"object\",\n        \"properties\" : {\n          \"MaxWeight\" : {\n            \"type\" : \"integer\"\n          },\n          \"MaxNumberOfBags\" : {\n            \"type\" : \"integer\"\n          },\n          \"MaxWeightPerBag\" : {\n            \"type\" : \"integer\"\n          },\n          \"WeightUnit\" : {\n            \"type\" : \"string\"\n          }\n        }\n      },\n      \"BoardingPass\" : {\n        \"description\" : \"Raw boarding pass data\",\n        \"type\" : \"object\",\n        \"properties\" : {\n          \"BarcodeData\" : {\n            \"type\" : \"string\"\n          }\n        }\n      },\n      \"PassengerId\" : {\n        \"description\" : \"Id of a passenger that has been submitted\",\n        \"type\" : \"object\",\n        \"properties\" : {\n          \"PassengerId\" : {\n            \"type\" : \"string\"\n          }\n        }\n      }\n    }\n  },\n  \"servers\" : [ {\n    \"description\" : \"SwaggerHub API Auto Mocking\",\n    \"url\" : \"https://virtserver.swaggerhub.com/Eindhoven-Airport/EventAPI/1.0\"\n  } ]\n}\n"
+  },
+  "scopes" : [ ],
+  "publishedPortals" : [ ],
+  "creationDate" : "2020-06-14 13:58:48 GMT",
+  "systemVersion" : 1,
+  "id" : "2f3a9ce8-60c0-4d0a-9f1a-b8a9bfb8ff16"
+}
