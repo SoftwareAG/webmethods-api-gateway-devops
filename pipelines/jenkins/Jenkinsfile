@@ -5,12 +5,14 @@ node ("master"){
 	load "${script_location}/pipelines/jenkins/jenkins.properties"
 	
 	stage('BuildAndDeploy') {
-	   def project_path = "${script_location}/apis/${api_project}"
-		withEnv(["api_project=${project_path}","apigateway_qa_url=${apigateway_qa_url}","apigateway_qa_username=${apigateway_qa_username}","apigateway_qa_password=${apigateway_qa_password}","bin_loc=${COMMON_LIB_LOCATION}"]) {
-		   sh '''
-		     source $bin_loc/common.lib; import_api $api_project $apigateway_qa_url $apigateway_qa_username $apigateway_qa_password
+		withEnv(["api_project=${api_project}","apigateway_qa_url=${apigateway_qa_url}","apigateway_qa_username=${apigateway_qa_username}","apigateway_qa_password=${apigateway_qa_password}","bin_loc=${COMMON_LIB_LOCATION}"]) {
+
+        dir($bin_loc){		
+		  sh '''
+		     source common.lib; import_api $api_project $apigateway_qa_url $apigateway_qa_username $apigateway_qa_password
 		   '''
-		}
+		 }
+	  }
 	}
 	
 	stage('Test') {
