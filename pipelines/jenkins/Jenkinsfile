@@ -16,11 +16,12 @@ node ("master"){
 	}
 	
    stage('Test') {
-	 def environment_file_loc = "${script_location}/tests/environment/qa_environment.json"
-		withEnv(["test_suite=${test_suite}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","env_file=${environment_file_loc}"]) {
-		  dir("$bin_loc"){		
+	withEnv(["test_suite=${test_suite}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
+	   def environment_file_loc = "${script_location}/tests/environment/qa_environment.json"
+	   def results_file = "${script_location}/Results"
+		dir("$bin_loc"){		
 			  sh '''
-				 source $bin_loc/common.lib; run_test_suite $test_suite $env_file $apigateway_qa_url 
+				 source $bin_loc/common.lib; run_test_suite $test_suite $env_file $apigateway_qa_url $results_file
 			   '''
 			 }
 		  }
