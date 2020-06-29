@@ -5,7 +5,7 @@ node ("master"){
 	stage('BuildAndDeploy') {
 		withEnv(["api_project=${api_project}","apigateway_qa_url=${apigateway_qa_url}","apigateway_qa_username=apigateway_qa_username","apigateway_qa_password=apigateway_qa_password"]) {
 		   sh '''
-		     source bin\common.lib; import_api $api_project $apigateway_qa_url $apigateway_qa_username $apigateway_qa_password
+		     source bin/common.lib; import_api $api_project $apigateway_qa_url $apigateway_qa_username $apigateway_qa_password
 		   '''
 		}
 	}
