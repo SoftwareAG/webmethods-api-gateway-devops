@@ -5,7 +5,7 @@ node ("master"){
 	load "${script_location}/pipelines/jenkins/jenkins.properties"
 	
 	stage('BuildAndDeploy') {
-		withEnv(["api_project=${api_project}","apigateway_qa_url=${apigateway_qa_url}","apigateway_qa_username=apigateway_qa_username","apigateway_qa_password=apigateway_qa_password","bin_loc=${COMMON_LIB_LOCATION}"]) {
+		withEnv(["project=${api_project}","apigateway_qa_url=${apigateway_qa_url}","apigateway_qa_username=apigateway_qa_username","apigateway_qa_password=apigateway_qa_password","bin_loc=${COMMON_LIB_LOCATION}"]) {
 		   sh '''
 		     source $bin_loc/common.lib; import_api $api_project $apigateway_qa_url $apigateway_qa_username $apigateway_qa_password
 		   '''
