@@ -9,7 +9,7 @@ node ("master"){
 
         dir("$bin_loc"){		
 		  sh '''
-		     source common.lib; import_api $api_project $apigateway_qa_url $apigateway_qa_username $apigateway_qa_password
+		     source $bin_loc/common.lib; import_api $api_project $apigateway_qa_url $apigateway_qa_username $apigateway_qa_password
 		   '''
 		 }
 	  }
