@@ -108,7 +108,13 @@ run_test() {
  test_collection=$1
  environment_file=$2
  env_vars=$3
-
+ result_folder=$4
+ 
+ if [ -d "$result_folder" ] 
+ then
+	mkdir $result_folder
+ fi
+ 
  newman_environment=
  
  if [ ! -z "$env_vars" ]
@@ -127,9 +133,9 @@ run_test() {
  
  if [ -z "$newman_environment" ] 
  then
- newman run $test_collection  --reporters cli,junit --reporter-junit-export Results/junitReport.xml -e $environment_file
+  newman run $test_collection  --reporters cli,junit --reporter-junit-export $result_folder/$RANDOM.xml -e $environment_file
  else 
- newman run $test_collection  --reporters cli,junit --reporter-junit-export Results/junitReport.xml -e $environment_file $newman_environment
+  newman run $test_collection  --reporters cli,junit --reporter-junit-export $result_folder/$RANDOM.xml -e $environment_file $newman_environment
  fi
 }
 
@@ -139,6 +145,8 @@ run_test_suite() {
     test_suite=$1
 	environment_file_location=$2
 	apigateway_server_url=$3
+	result_folder=$4
+	
 	
 	CURR_DIR="../"
 	API_DIR=$CURR_DIR/tests/test-suites/
@@ -148,12 +156,12 @@ run_test_suite() {
 	if [ "$test_suite" = "*" ] 
 	then 
 	for file in $API_DIR/*; do
-		run_test $file $2 "httpInvokeUrl=$apigateway_server_url"
+		run_test $file $2 "httpInvokeUrl=$apigateway_server_url" $4
 	done
 	exit
 	fi
 
-	run_test $test_suite $2  "httpInvokeUrl=$apigateway_server_url"
+	run_test $test_suite $2  "httpInvokeUrl=$apigateway_server_url" $4
 }
 
 ##############################################################################
