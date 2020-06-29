@@ -108,7 +108,7 @@ run_test() {
  test_collection=$1
  environment_file=$2
  env_vars=$3
- echo "Env:$env_vars"
+
  newman_environment=
  
  if [ ! -z "$env_vars" ]
@@ -131,6 +131,26 @@ run_test() {
  else 
  newman run $test_collection  --reporters cli,junit --reporter-junit-export Results/junitReport.xml -e $environment_file $newman_environment
  fi
+}
+
+
+run_test_suite() {
+    test_suite=$1
+	apigateway_server_url=$2
+	CURR_DIR="../"
+	API_DIR=$CURR_DIR/tests/test-suites/
+	ENVIRONMENT_DIR=$CURR_DIR/tests/environment
+	
+	echo "Running tests for API gateway"
+	if [ "$test_suite" = "*" ] 
+	then 
+	for file in $API_DIR/*; do
+		run_test $file $ENVIRONMENT_DIR/build_environment.json "httpInvokeUrl=$apigateway_server_url"
+	done
+	exit
+	fi
+
+	run_test $test_suite $ENVIRONMENT_DIR/build_environment.json  "httpInvokeUrl=$apigateway_server_url"
 }
 
 ##############################################################################

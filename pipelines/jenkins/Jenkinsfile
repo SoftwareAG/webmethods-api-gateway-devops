@@ -16,7 +16,16 @@ node ("master"){
 	}
 	
 	stage('Test') {
-	 
+	 withEnv(["test_suite=${test_suite}","apigateway_qa_url=${apigateway_qa_url}","apigateway_qa_username=${apigateway_qa_username}","apigateway_qa_password=${apigateway_qa_password}","bin_loc=${COMMON_LIB_LOCATION}"]) {
+
+        dir("$bin_loc"){		
+		  sh '''
+		     
+		     run_test $test_suite ../tests/environment/build_environment.json "httpInvokeUrl=http://localhost:$apigateway_server_port"
+		     source $bin_loc/common.lib; run_test $test_suite $apigateway_qa_url $apigateway_qa_username $apigateway_qa_password
+		   '''
+		 }
+	  }
 	}
 	
 	stage('Rollout') {
