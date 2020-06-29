@@ -50,21 +50,5 @@ These demo assets are just samples and recommendations and templates on how an R
 6. API readiness, Security tests , other type of tests for APIs.
 
 
-Preconfiguration script
- 1. create
-    - stage.
-	- start with external configurations.
-	- property file location.
-	- docker registry location.
-
- 2. External configuration.
-    - property file location.
-	
-Build script 
- - Create a docker image.
- - Import.
- - Test - enable mocking.
- - Report.	
-
  
 

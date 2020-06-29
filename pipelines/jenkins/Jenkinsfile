@@ -1,0 +1,17 @@
+node ("master"){
+	echo ""
+	load "jenkins.properties"
+	
+	stage('BuildAndDeploy') {
+		
+	}
+	
+	stage('Test') {
+	 
+	}
+	
+	stage('Rollout') {
+	
+	}
+   
+}

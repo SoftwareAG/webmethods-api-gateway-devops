@@ -14,18 +14,20 @@ apigateway_ui_port=9072
 apigateway_es_port=9240
 create_new=false
 import_configurations=true
+cleanup=false
 #Usage of this script
 usage(){
 echo "Usage: $0"
 echo "args:"
 echo "--stage(*)                   Possible value are dev,qa,prod"
-echo "--apigateway_image(*)	       The DTR for API Gateway image"
+echo "--apigateway_image	       The DTR for API Gateway image"
 echo "--terracotta_image           The DTR for Terracotta image in case of cluster environments"
 echo "--apigateway_server_port     API Gateway server port"
 echo "--apigateway_ui_port         API Gateway UI port"
 echo "--apigateway_es_port		   API Gateway Elastic search port"
-echo "--create_new                 Create new even if an existing container is running by killing it.Default is false."
-echo "--import_configurations      Import configurations into the created container.Default value is true"
+echo "--create_new                 Create new even if an existing container is running by killing it"
+echo "--import_configurations      Import configurations into the created container"
+echo "--cleanup     			   Cleanup the created images"
 exit
 }
 
@@ -67,6 +69,9 @@ parseArgs(){
 	    import_configurations=${1}
 		shift
 	  ;;
+	  --cleanup)
+	    cleanup=true
+	  ;;
 	  *)
         echo "Unknown: $arg"
         usage
@@ -81,14 +86,18 @@ main(){
 parseArgs "$@"
 if [ -z "$stage" ] 
 then 
-echo "Stage name is missing." 
-usage
+	echo "Stage name is missing." 
+	usage
 fi
-if [ -z "$apigateway_image" ] 
-then 
-echo "apigateway_image name is missing." 
-usage
+
+if [ $cleanup = "true" ] 
+then
+	cd ../deployment-descriptors/$stage
+	docker-compose rm -f -s -v
+	cd $CURR_DIR
+	exit
 fi
+
 
 if [ $stage = "dev" ] 
 then
@@ -106,7 +115,6 @@ fi
 
 
 echo "Staring an API Gateway environment for $stage"
-echo "APIGateway image is present at $apigateway_image"
 cd ../deployment-descriptors/$stage
 cat > .env <<EOF
 apigateway_image=$apigateway_image
@@ -141,6 +149,7 @@ echo "API Gateway at http://localhost:$apigateway_server_port is not up.Exiting"
 exit
 fi
 
+echo "API Gateway is up"
 if [ $import_configurations = "true" ] 
 then
  echo "Importing Configuration into the Environment"
@@ -152,7 +161,7 @@ else
 fi
 
 cd $CURR_DIR
-echo $PWD
+
 for file in ../configuration/$conf_stage/*; do
     echo "$file"
     import_configurations $file http://localhost:$apigateway_server_port "Administrator" "manage" $conf_stage

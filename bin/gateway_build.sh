@@ -13,6 +13,7 @@ apigateway_ui_port=9072
 create_new=false
 apigateway_es_port=9240
 test_suite=
+skip_import=false
 #Usage of this script
 usage(){
 echo "Usage: $0"
@@ -23,6 +24,7 @@ echo "--apigateway_ui_port      API Gateway UI port.Default is 9072"
 echo "--apigateway_es_port		API Gateway Elastic search port.Default is 9240"
 echo "--create_new              Create new API Gateway container even if an existing container is running by killing it.Default is false."
 echo "--test_suite              The postman collection test_suite to run.Default will not run any test.To run all tests pass *"
+echo "--skip_import             To skip the import of APIs"
 exit
 }
 
@@ -56,6 +58,10 @@ parseArgs(){
 	    test_suite=${1}
 		shift
 	  ;;
+	  --skip_import)
+	    skip_import=true
+		shift
+	  ;;
 	  *)
         echo "Unknown: $arg"
         usage
@@ -73,8 +79,12 @@ parseArgs "$@"
 fi
 
 
-echo "Start the environment"
-sh gateway_setup.sh  --stage build --apigateway_image $apigateway_image --apigateway_server_port $apigateway_server_port --apigateway_ui_port $apigateway_ui_port --apigateway_es_port $apigateway_es_port
+if [ -z $apigateway_image ] 
+then
+	sh gateway_setup.sh  --stage build --apigateway_server_port $apigateway_server_port --apigateway_ui_port $apigateway_ui_port --apigateway_es_port $apigateway_es_port
+else 
+	sh gateway_setup.sh  --stage build --apigateway_image $apigateway_image --apigateway_server_port $apigateway_server_port --apigateway_ui_port $apigateway_ui_port --apigateway_es_port $apigateway_es_port
+fi
 
 echo "Checking the API Gateway is up" 
 ping_apigateway_server http://localhost:$apigateway_server_port 30 30
@@ -85,12 +95,15 @@ echo "API Gateway at http://localhost:$apigateway_server_port is not up.Exiting"
 exit
 fi
 
-echo "Importing all the APIs to the Build machine"
-for file in ../apis/*; do
-    if [ -d "$file" ]; then
-        import_api $file http://localhost:$apigateway_server_port "Administrator" "manage"
-    fi
-done
+if [ $skip_import = "false" ] 
+then
+	echo "Importing all the APIs to the Build machine"
+	for file in ../apis/*; do
+		if [ -d "$file" ]; then
+			import_api $file http://localhost:$apigateway_server_port "Administrator" "manage"
+		fi
+	done
+fi 
 
 if [ -z "$test_suite" ] 
 then
@@ -107,7 +120,7 @@ done
 exit
 fi
 
-run_test $test_suite ../tests/environment/build_environment.json
+run_test $test_suite ../tests/environment/build_environment.json "httpInvokeUrl=http://localhost:$apigateway_server_port"
 
 
 cd $PWD

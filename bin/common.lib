@@ -129,7 +129,6 @@ run_test() {
  then
  newman run $test_collection  --reporters cli,junit --reporter-junit-export Results/junitReport.xml -e $environment_file
  else 
- echo "newman run $test_collection  --reporters cli,junit --reporter-junit-export Results/junitReport.xml -e $environment_file $newman_environment"
  newman run $test_collection  --reporters cli,junit --reporter-junit-export Results/junitReport.xml -e $environment_file $newman_environment
  fi
 }
