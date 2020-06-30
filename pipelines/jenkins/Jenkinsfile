@@ -26,9 +26,10 @@ node ("VMYAIBVT03L"){
 	withEnv(["test_suite=${test_suite}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
 	   def environment_file_loc = "${script_location}/tests/environment/qa_environment.json"
 	   def results_file = "${script_location}/Results"
+	   def test_suite_location = "${script_location}/$test_suite"
 		dir("$bin_loc"){		
 			  sh '''
-				 source $bin_loc/common.lib; run_test_suite $test_suite $environment_file_loc $apigateway_qa_url $results_file
+				 source $bin_loc/common.lib; run_test_suite $test_suite_location $environment_file_loc $apigateway_qa_url $results_file
 			   '''
 			 }
 		  }
