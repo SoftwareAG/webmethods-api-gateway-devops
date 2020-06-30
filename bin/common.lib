@@ -111,10 +111,12 @@ run_test() {
  env_vars=$3
  result_folder=$4
  
- if [ ! -d "$result_folder" ] 
+ if [ -d "$result_folder" ] 
  then
-	mkdir $result_folder
+  rm -R $result_folder
  fi
+ 
+ mkdir $result_folder
  
  newman_environment=
  
@@ -134,7 +136,7 @@ run_test() {
  
  if [ -z "$newman_environment" ] 
  then
-  newman run $test_collection  --reporters cli,junit --reporter-junit-export $result_folder/$RANDOM.xml -e $environment_file
+  newman run $test_collection  --reporters cli,junit --reporter-junit-export $result_folder/$RANDOM.xml -e $environment_file --reporter-html-export $result_folder/index.html
  else 
   newman run $test_collection  --reporters cli,junit --reporter-junit-export $result_folder/$RANDOM.xml -e $environment_file $newman_environment
  fi
