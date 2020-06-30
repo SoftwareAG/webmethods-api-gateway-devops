@@ -29,7 +29,7 @@ node ("VMYAIBVT03L"){
 	   def test_suite_location = "${script_location}/$test_suite"
 		dir("$bin_loc"){		
 			  sh '''
-				 source $bin_loc/common.lib; run_test_suite $test_suite_location $environment_file_loc $apigateway_qa_url $results_file
+				 source $bin_loc/common.lib; run_test_suite ${test_suite_location} ${environment_file_loc} $apigateway_qa_url ${results_file}
 			   '''
 			 }
 		  }
