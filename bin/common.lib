@@ -156,7 +156,7 @@ run_test_suite() {
 
 	
 	echo "Running tests for API gateway"
-	if [ "$test_suite" = "*" ] 
+	if [ "$test_suite" = "all" ] 
 	then 
 	for file in $API_DIR/*; do
 		run_test $file $2 "httpInvokeUrl=$apigateway_server_url" $4
