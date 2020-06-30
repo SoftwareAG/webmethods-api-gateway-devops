@@ -30,14 +30,14 @@ node ("VMYAIBVT03L"){
 			   '''
 			 }
 		  }
-	publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'Results', reportFiles: '*.xml', reportName: 'Newman API Test', reportTitles: ''])	  
+	publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'apigateway/Results', reportFiles: '*.xml', reportName: 'Newman API Test', reportTitles: ''])	  
 	}
 	
 	stage('Rollout') {
 	withEnv(["test_suite=${test_suite}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
 		dir("$bin_loc"){		
 			  sh '''
-				 source $bin_loc/common.lib; promote_api $test_suite "${script_location}/tests/environment/qa_environment.json" $apigateway_qa_url "$script_location/Results" "httpInvokeUrl=$apigateway_server_url;buildNumber=${currentBuild.number}"
+				 source $bin_loc/common.lib; promote_api $test_suite "${script_location}/tests/environment/qa_environment.json" $apigateway_qa_url "$script_location/Results" "httpInvokeUrl=$apigateway_server_url;buildNumber=\"${currentBuild.number}\""
 			   '''
 			 }
 		  }
