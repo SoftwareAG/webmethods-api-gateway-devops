@@ -1,9 +1,15 @@
 node ("VMYAIBVT03L"){
+
 	def workspace = pwd()
-	def script_location = "${workspace}@script"
+	def script_location = "${workspace}/apigateway"
 	def COMMON_LIB_LOCATION = "${script_location}/bin"
 	load "${script_location}/pipelines/jenkins/jenkins.properties"
 	
+
+   stage('Checkout') {
+     checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'apigateway']], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/SoftwareAG/webmethods-api-gateway-devops.git']]])
+   }
+
 	stage('BuildAndDeploy') {
 		withEnv(["api_project=${api_project}","apigateway_qa_url=${apigateway_qa_url}","apigateway_qa_username=${apigateway_qa_username}","apigateway_qa_password=${apigateway_qa_password}","bin_loc=${COMMON_LIB_LOCATION}"]) {
 
