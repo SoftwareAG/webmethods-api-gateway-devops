@@ -34,9 +34,9 @@ node ("VMYAIBVT03L"){
 	}
 	
 	stage('Rollout') {
-	withEnv(["test_suite=${test_suite}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
+	withEnv(["api_project=${api_project}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
 		dir("$bin_loc"){		
-			  sh " source $bin_loc/common.lib; promote_api $test_suite \"${script_location}/tests/environment/qa_environment.json\" \"httpInvokeUrl=$apigateway_qa_url;buildNumber=\"${currentBuild.number}\"\""
+			  sh " source $bin_loc/common.lib; promote_api $api_project \"${script_location}/tests/environment/qa_environment.json\" \"httpInvokeUrl=$apigateway_qa_url;buildNumber=\"${currentBuild.number}\"\""
 			 }
 		  }
 	}
