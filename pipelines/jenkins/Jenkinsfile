@@ -1,4 +1,4 @@
-node ("master"){
+node ("VMYAIBVT03L"){
 	def workspace = pwd()
 	def script_location = "${workspace}@script"
 	def COMMON_LIB_LOCATION = "${script_location}/bin"
@@ -28,7 +28,15 @@ node ("master"){
 	}
 	
 	stage('Rollout') {
-	
+	withEnv(["test_suite=${test_suite}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
+	   def environment_file_loc = "${script_location}/tests/environment/qa_environment.json"
+		dir("$bin_loc"){		
+			  sh '''
+				 source $bin_loc/common.lib; promote_api $test_suite $env_file $apigateway_qa_url $results_file "httpInvokeUrl=$apigateway_server_url;buildNumber=${currentBuild.number}
+			   '''
+			 }
+		  }
+	}
 	}
    
 }

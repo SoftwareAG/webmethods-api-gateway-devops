@@ -100,6 +100,7 @@ export_api() {
 	echo "The API with name $api does not exists in the flat file."
 	fi
 }
+
 ##############################################################################
 ## Run tests pointing to a postman collection
 ## Usage run_test <collection_name> <environment_file_location> <environment_Variables>
@@ -163,6 +164,29 @@ run_test_suite() {
 
 	run_test $test_suite $2  "httpInvokeUrl=$apigateway_server_url" $4
 }
+
+
+promote_api() {
+
+   CURR_DIR="../"
+   PROMOTION_MANAGEMENT=$CURR_DIR/utilities/promotion/PromotionManagement.json
+   PROMOTION_MANAGEMENT_PAYLOAD=CURR_DIR/apis/$1/promotion_payload.json
+   
+    newman_environment=
+ 
+	 if [ ! -z "$env_vars" ]
+	 then
+		split $env_vars ";"
+		echo $env_vars_array
+		for i in "${env_vars_array[@]}"  
+		do  
+			newman_environment="$newman_environment --env-var $i "
+		done  
+	 fi
+   
+   newman run $PROMOTION_MANAGEMENT  -g $2 -e $PROMOTION_MANAGEMENT_PAYLOAD $newman_environment
+}
+
 
 ##############################################################################
 ## Utility method to split a input with an delimter
