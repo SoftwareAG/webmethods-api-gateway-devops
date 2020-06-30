@@ -170,9 +170,10 @@ promote_api() {
 
    CURR_DIR="../"
    PROMOTION_MANAGEMENT=$CURR_DIR/utilities/promotion/PromotionManagement.json
-   PROMOTION_MANAGEMENT_PAYLOAD=CURR_DIR/apis/$1/promotion_payload.json
+   PROMOTION_MANAGEMENT_PAYLOAD=$CURR_DIR/apis/$1/promotion_payload.json
+   env_vars=$3
    
-    newman_environment=
+   newman_environment=
  
 	 if [ ! -z "$env_vars" ]
 	 then
