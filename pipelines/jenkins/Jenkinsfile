@@ -32,12 +32,14 @@ node ("VMYAIBVT03L"){
 			 }
 		  }
 
-	} finally (all) {
+	} finally {
 		junit 'apigateway/Results/*.xml'
     	publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'apigateway/Results', reportFiles: 'index.html', reportName: 'Newman API Test', reportTitles: ''])	  
 
 	}
 	}
+	
+	
 	
 	stage('Rollout') {
 	withEnv(["api_project=${api_project}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
