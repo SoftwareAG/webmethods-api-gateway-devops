@@ -30,7 +30,7 @@ node ("VMYAIBVT03L"){
 			   '''
 			 }
 		  }
-	publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '${script_location}/Results', reportFiles: '*.xml', reportName: 'Newman API Test', reportTitles: ''])	  
+	publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '"${script_location}/Results"', reportFiles: '*.xml', reportName: 'Newman API Test', reportTitles: ''])	  
 	}
 	
 	stage('Rollout') {
