@@ -136,9 +136,9 @@ run_test() {
  
  if [ -z "$newman_environment" ] 
  then
-  newman run $test_collection  --reporters cli,junit --reporter-junit-export $result_folder/$RANDOM.xml -e $environment_file --reporter-html-export $result_folder/index.html
+  newman run $test_collection  --reporters cli,junit,html --reporter-junit-export $result_folder/$RANDOM.xml -e $environment_file --reporter-html-export $result_folder/index.html
  else 
-  newman run $test_collection  --reporters cli,junit --reporter-junit-export $result_folder/$RANDOM.xml -e $environment_file $newman_environment
+  newman run $test_collection  --reporters cli,junit,html --reporter-junit-export $result_folder/$RANDOM.xml -e $environment_file $newman_environment --reporter-html-export $result_folder/index.html
  fi
 }
 
