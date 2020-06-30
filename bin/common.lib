@@ -111,7 +111,7 @@ run_test() {
  env_vars=$3
  result_folder=$4
  
- if [ -d "$result_folder" ] 
+ if [ ! -d "$result_folder" ] 
  then
 	mkdir $result_folder
  fi
