@@ -1,4 +1,9 @@
-node ("VMYAIBVT03L"){
+/*
+  TODO add comments.
+
+ */
+
+node ("master"){
 
 	def workspace = pwd()
 	def script_location = "${workspace}/apigateway"

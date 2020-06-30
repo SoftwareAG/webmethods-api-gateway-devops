@@ -5,25 +5,25 @@
     {
       "enabled": true,
       "key": "url",
-      "value": "https://kulik.gateway.webmethodscloud.com",
+      "value": "",
       "type": "text"
     },
 	{
       "enabled": true,
       "key": "httpInvokeUrl",
-      "value": "http://kulik.gateway.webmethodscloud.com/",
+      "value": "",
       "type": "text"
     },
     {
       "enabled": true,
       "key": "auth",
-      "value": "Basic bWFkaGF2YW46TWFkaGF2YW5AMTIz",
+      "value": "",
       "type": "text"
     },
 	{
       "enabled": true,
       "key": "higherStageKey",
-      "value": "195cb1ca-b341-432d-8002-0301114b92ae",
+      "value": "",
       "type": "text"
     }
   ],
