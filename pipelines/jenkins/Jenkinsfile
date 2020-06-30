@@ -8,7 +8,7 @@ node ("VMYAIBVT03L"){
      checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'apigateway']], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/SoftwareAG/webmethods-api-gateway-devops.git']]])
    }
 
-   	load "${script_location}/pipelines/jenkins/jenkins.properties"
+    load "${script_location}/pipelines/jenkins/jenkins.properties"
 
 	stage('BuildAndDeploy') {
 	
