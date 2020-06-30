@@ -30,6 +30,8 @@ node ("VMYAIBVT03L"){
 			   '''
 			 }
 		  }
+	
+	junit 'Results/*.xml'
 	publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'apigateway/Results', reportFiles: 'index.html', reportName: 'Newman API Test', reportTitles: ''])	  
 	}
 	
