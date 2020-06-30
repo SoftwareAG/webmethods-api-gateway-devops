@@ -23,6 +23,7 @@ node ("VMYAIBVT03L"){
 	}
 	
    stage('Test') {
+   try {
 	withEnv(["test_suite=${test_suite}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
 		dir("$bin_loc"){		
 			  sh '''
@@ -30,9 +31,12 @@ node ("VMYAIBVT03L"){
 			   '''
 			 }
 		  }
-	
-	junit 'apigateway/Results/*.xml'
-	publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'apigateway/Results', reportFiles: 'index.html', reportName: 'Newman API Test', reportTitles: ''])	  
+
+	} finally (all) {
+		junit 'apigateway/Results/*.xml'
+    	publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'apigateway/Results', reportFiles: 'index.html', reportName: 'Newman API Test', reportTitles: ''])	  
+
+	}
 	}
 	
 	stage('Rollout') {
