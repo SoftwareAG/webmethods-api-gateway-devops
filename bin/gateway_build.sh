@@ -1,7 +1,22 @@
 #!/bin/bash
 ##############################################################################
 ##
-## This script helps in 
+## This script can be used for developers to validate the changes made to the 
+## APIs. This creates an single node Docker based API Gateway environment 
+## imports the entire set and of API Projects and then run the tests suites 
+## against the build machine.
+## Parameters: 
+## apigateway_image           The DTR for API Gateway image.
+## apigateway_server_port     API Gateway server port.Default is 5555
+## apigateway_ui_port		  API Gateway UI port.Default is 9072
+## apigateway_es_port		  API Gateway Elastic search port.Default is 9240
+## create_new                 Create new API Gateway container even if an 
+##                             existing container is running by killing it.
+##                             Default is false.
+## test_suite				  The postman collection test_suite to run.
+##							   Default will not run any test.To run all tests pass *
+##
+## skip_import 				  To skip the import of APIs
 ##
 ##############################################################################
 

@@ -1,7 +1,23 @@
 #!/bin/bash
 ##############################################################################
 ##
+## This script can be used to create stage specific API Gateway environment. 
+## The Docker compose files are present at deployment-descriptors\<stage>
+## Dev and Build stages are single node instances and QA and Prod are
+## 3 node clusters.
+## Parameters: 
 ##
+## stage					  Possible value are build,dev,qa,prod.
+## apigateway_image           The DTR for API Gateway image.
+## terracotta_image           The DTR for Terracotta image in case of cluster environments
+## apigateway_server_port     API Gateway server port.Default is 5555
+## apigateway_ui_port		  API Gateway UI port.Default is 9072
+## apigateway_es_port		  API Gateway Elastic search port.Default is 9240
+## create_new                 Create new API Gateway container even if an 
+##                             existing container is running by killing it.
+##                             Default is false.
+## import_configurations	  Import configurations into the created container *
+## cleanup 				      Cleanup the created images
 ##
 ##############################################################################
 CURR_DIR="$PWD"

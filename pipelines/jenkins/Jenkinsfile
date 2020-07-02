@@ -1,16 +1,26 @@
 /*
-  TODO add comments.
-
- */
+ This pipeline depicts how an API(project) that is present 
+ in VCS can be promoted to an API Gateway Prod environment  after testing it in the 
+ API Gateway QA environment.
+ The API(project) is imported in the QA environment and after running tests it is promoted
+ to the Prod using the Promotion mangement APIs.
+ The details of the API Gateway QA environment is provied in the jenkins.properties and the 
+ API Gateway Prod environment is created as a stage in the API Gateway QA environment
+ The project to be built is provided in jenkins.properties.
+ This pipeline by default runs on the master and uses the library methods present in bin/common.lib  
+*/
 
 node ("master"){
+
+   def GIT_LOCATION = "https://github.com/SoftwareAG/webmethods-api-gateway-devops.git"
 
 	def workspace = pwd()
 	def script_location = "${workspace}/apigateway"
 	def COMMON_LIB_LOCATION = "${script_location}/bin"
+	
 
    stage('Checkout') {
-     checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'apigateway']], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/SoftwareAG/webmethods-api-gateway-devops.git']]])
+     checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'apigateway']], submoduleCfg: [], userRemoteConfigs: [[url: "${GIT_LOCATION}"]]])
    }
 
     load "${script_location}/pipelines/jenkins/jenkins.properties"
