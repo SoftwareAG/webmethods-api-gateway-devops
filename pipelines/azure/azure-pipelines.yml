@@ -26,7 +26,7 @@ stages:
             replaceExistingArchive: true
             verbose: true
            displayName: 'Create the API Deployable from the flat representation'
-         - script: 'newman run utilities/import/ImportAPI.json  --reporters cli --env-var file_Loc=$(Build.BuildId).zip -e qa_environment.json'
+         - script: 'newman run utilities/import/ImportAPI.json  --reporters cli --env-var file_Loc=$(Build.BuildId).zip -e tests/environment/qa_environment.json'
            workingDirectory: '$(System.DefaultWorkingDirectory)'
            displayName: 'Import the Deployable To API Gateway'      
          - publish :  '$(System.DefaultWorkingDirectory)/$(Build.BuildId).zip'
@@ -50,7 +50,7 @@ stages:
          - script: 'sudo npm install -g newman'
            workingDirectory: '$(System.DefaultWorkingDirectory)'
            displayName: 'Prerequisite'
-         - script: 'newman run test-suites/PerformanceTest.json  --reporters cli,junit --reporter-junit-export Results/performanceReport.xml -e qa_environment.json -n 20'
+         - script: 'newman run test-suites/PerformanceTest.json  --reporters cli,junit --reporter-junit-export Results/performanceReport.xml -e tests/environment/qa_environment.json -n 20'
            workingDirectory: '$(System.DefaultWorkingDirectory)/tests'
            displayName: 'Run tests on the QA Machine'
          - task: PublishBuildArtifacts@1
@@ -96,6 +96,6 @@ stages:
         - script: 'sudo npm install -g newman'
           workingDirectory: '$(System.DefaultWorkingDirectory)'
           displayName: 'Prerequisite'
-        - script: 'newman run utilities/promotion/PromotionManagement.json  --reporters cli -g qa_environment.json -e $(System.DefaultWorkingDirectory)/apis/{parameters.apiProject}/promotion_payload.json --env-var buildNumber=$(Build.BuildId)'
+        - script: 'newman run utilities/promotion/PromotionManagement.json  --reporters cli -g tests/environment/qa_environment.json -e $(System.DefaultWorkingDirectory)/apis/{parameters.apiProject}/promotion_payload.json --env-var buildNumber=$(Build.BuildId)'
           workingDirectory: '$(System.DefaultWorkingDirectory)'
           displayName: 'Promotion'
