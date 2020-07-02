@@ -4,7 +4,7 @@
 ## This script can be used for developers import and export APIs(projects) 
 ## as a flat file representation of the VCS.
 ## Parameters: 
-## import(or)--export         To import or export from the flat file.
+## import(or)export           To import or export from the flat file.
 ## api_name	                  The API project to import.
 ## apigateway_url		      APIGateway url to import or export from.Default is http://localhost:5555.
 ## apigateway_es_port		  API Gateway Elastic search port.Default is 9240

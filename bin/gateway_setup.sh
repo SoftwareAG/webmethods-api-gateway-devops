@@ -16,7 +16,7 @@
 ## create_new                 Create new API Gateway container even if an 
 ##                             existing container is running by killing it.
 ##                             Default is false.
-## import_configurations	  Import configurations into the created container *
+## import_configurations	  Import configurations into the created container.
 ## cleanup 				      Cleanup the created images
 ##
 ##############################################################################
