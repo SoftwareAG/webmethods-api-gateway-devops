@@ -19,7 +19,7 @@ stages:
            displayName: 'Prerequisite'
          - task: ArchiveFiles@2
            inputs:
-            rootFolderOrFile: '$(System.DefaultWorkingDirectory)/apis/${parameters.apiProject}'
+            rootFolderOrFile: '$(System.DefaultWorkingDirectory)/apis/${{Parameters.apiProject}}'
             includeRootFolder: false
             archiveType: 'zip'
             archiveFile: '$(System.DefaultWorkingDirectory)/$(Build.BuildId).zip'
@@ -96,6 +96,6 @@ stages:
         - script: 'sudo npm install -g newman'
           workingDirectory: '$(System.DefaultWorkingDirectory)'
           displayName: 'Prerequisite'
-        - script: 'newman run utilities/promotion/PromotionManagement.json  --reporters cli -g qa_environment.json -e $(System.DefaultWorkingDirectory)/apis/{parameters.apiProject}/promotion_payload.json --env-var buildNumber=$(Build.BuildId)'
+        - script: 'newman run utilities/promotion/PromotionManagement.json  --reporters cli -g qa_environment.json -e $(System.DefaultWorkingDirectory)/apis/${{Parameters.apiProject}}/promotion_payload.json --env-var buildNumber=$(Build.BuildId)'
           workingDirectory: '$(System.DefaultWorkingDirectory)'
           displayName: 'Promotion'
