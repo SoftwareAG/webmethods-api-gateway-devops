@@ -39,11 +39,6 @@ node ("VMYAIBVT03L"){
 	
    stage('Test') {
    try {
-	if(${test_suite} == "all") {
-	  tests = "all"
-	} else {
-	 tests = "${script_location}/${test_suite}"
-	}
 	withEnv(["test_suite=${test_suite}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
 		dir("$bin_loc"){		
 			  sh '''
