@@ -39,7 +39,7 @@ node ("VMYAIBVT03L"){
 	
    stage('Test') {
    try {
-    def tests = "${script_location}/${test_suite}"
+    tests = "${script_location}/${test_suite}"
 	if(${test_suite} == "all") {
 	  tests = "all"
 	}
