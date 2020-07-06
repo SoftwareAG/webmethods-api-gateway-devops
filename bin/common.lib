@@ -151,12 +151,7 @@ run_test() {
  env_vars=$3
  result_folder=$4
  
- if [ -d "$result_folder" ] 
- then
-  rm -R $result_folder
- fi
- 
- mkdir $result_folder
+
  
  newman_environment=
  
@@ -195,7 +190,12 @@ run_test_suite() {
 	environment_file_location=$2
 	apigateway_server_url=$3
 	result_folder=$4
-	
+	if [ -d "$result_folder" ] 
+	then
+		rm -R $result_folder
+	fi
+ 
+   mkdir $result_folder
 	
 	CURR_DIR="../"
 	API_DIR=$CURR_DIR/tests/test-suites/
