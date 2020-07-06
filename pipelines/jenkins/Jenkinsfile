@@ -10,7 +10,7 @@
  This pipeline by default runs on the master and uses the library methods present in bin/common.lib  
 */
 
-node ("VMYAIBVT03L"){
+node ("master"){
 
     def GIT_LOCATION = "https://github.com/SoftwareAG/webmethods-api-gateway-devops.git"
 
@@ -58,8 +58,6 @@ node ("VMYAIBVT03L"){
 			echo "Exception: ${err}"
 		} finally {
 			junit 'apigateway/Results/*.xml'
-			publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'apigateway/Results', reportFiles: 'index.html', reportName: 'Newman API Test', reportTitles: ''])	  
-
 		}
 	}
 	
