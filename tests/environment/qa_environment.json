@@ -5,25 +5,25 @@
     {
       "enabled": true,
       "key": "url",
-      "value": "",
+      "value": "http://localhost:5555",
       "type": "text"
     },
 	{
       "enabled": true,
       "key": "httpInvokeUrl",
-      "value": "",
+      "value": "http://localhost:5555",
       "type": "text"
     },
     {
       "enabled": true,
       "key": "auth",
-      "value": "",
+      "value": "Basic QWRtaW5pc3RyYXRvcjptYW5hZ2U= ",
       "type": "text"
     },
 	{
       "enabled": true,
       "key": "higherStageKey",
-      "value": "",
+      "value": "e310942b-c96d-4f7c-aa0a-00e81efdc8b5",
       "type": "text"
     }
   ],
