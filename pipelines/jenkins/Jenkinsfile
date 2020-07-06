@@ -12,11 +12,12 @@
 
 node ("VMYAIBVT03L"){
 
-   def GIT_LOCATION = "https://github.com/SoftwareAG/webmethods-api-gateway-devops.git"
+    def GIT_LOCATION = "https://github.com/SoftwareAG/webmethods-api-gateway-devops.git"
 
 	def workspace = pwd()
 	def script_location = "${workspace}/apigateway"
 	def COMMON_LIB_LOCATION = "${script_location}/bin"
+    def test_folder = ""
 	
 
    stage('Checkout') {
@@ -38,7 +39,7 @@ node ("VMYAIBVT03L"){
 	}
 	
    stage('Test') {
-   def test_folder = ""
+
    try {
 	if(${test_suite} == "all") {
 	  test_folder = "all"
