@@ -69,7 +69,26 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "400" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            },
+            "404" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            },
+            "405" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "security" : [ {
             "petstore_auth" : [ "write:pets", "read:pets" ]
@@ -111,7 +130,14 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "405" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "security" : [ {
             "petstore_auth" : [ "write:pets", "read:pets" ]
@@ -148,17 +174,14 @@
           "operationId" : "getUserByName",
           "produces" : [ "application/json", "application/xml" ],
           "parameters" : [ {
-            "schema" : {
-              "type" : "string"
-            },
+            "name" : "username",
             "in" : "path",
+            "description" : "The name that needs to be fetched. Use user1 for testing. ",
+            "required" : true,
+            "type" : "string",
             "parameterSchema" : {
               "type" : "string"
-            },
-            "name" : "username",
-            "description" : "The name that needs to be fetched. Use user1 for testing. ",
-            "type" : "string",
-            "required" : true
+            }
           } ],
           "responses" : {
             "200" : {
@@ -199,7 +222,26 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "200" : {
+              "responseBody" : {
+                "application/xml" : "<firstName>qX</firstName><lastName/><password>vq</password><userStatus>680539209</userStatus><phone>rPwfLj</phone><id>1514611979</id><email>S</email><username>FSe</username>",
+                "application/json" : "{\"firstName\":\"\",\"lastName\":\"RQIqfkY\",\"password\":\"jmWFKFcx\",\"userStatus\":575906307,\"phone\":\"HCYKTJ\",\"id\":176993883,\"email\":\"\",\"username\":\"RnbrvRa\"}"
+              }
+            },
+            "400" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            },
+            "404" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "enabled" : true,
           "scopes" : [ ],
@@ -216,17 +258,14 @@
           "consumes" : [ "application/json" ],
           "produces" : [ "application/json", "application/xml" ],
           "parameters" : [ {
-            "schema" : {
-              "type" : "string"
-            },
+            "name" : "username",
             "in" : "path",
+            "description" : "name that need to be updated",
+            "required" : true,
+            "type" : "string",
             "parameterSchema" : {
               "type" : "string"
-            },
-            "name" : "username",
-            "description" : "name that need to be updated",
-            "type" : "string",
-            "required" : true
+            }
           } ],
           "responses" : {
             "400" : {
@@ -246,7 +285,20 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "400" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            },
+            "404" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "enabled" : true,
           "scopes" : [ ],
@@ -269,17 +321,14 @@
           "operationId" : "deleteUser",
           "produces" : [ "application/json", "application/xml" ],
           "parameters" : [ {
-            "schema" : {
-              "type" : "string"
-            },
+            "name" : "username",
             "in" : "path",
+            "description" : "The name that needs to be deleted",
+            "required" : true,
+            "type" : "string",
             "parameterSchema" : {
               "type" : "string"
-            },
-            "name" : "username",
-            "description" : "The name that needs to be deleted",
-            "type" : "string",
-            "required" : true
+            }
           } ],
           "responses" : {
             "400" : {
@@ -299,7 +348,20 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "400" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            },
+            "404" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "enabled" : true,
           "scopes" : [ ],
@@ -320,37 +382,22 @@
           "operationId" : "findPetsByStatus",
           "produces" : [ "application/json", "application/xml" ],
           "parameters" : [ {
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "type" : "string",
-                "enum" : [ "available", "pending", "sold" ]
-              }
-            },
+            "name" : "status",
             "in" : "query",
+            "description" : "Status values that need to be considered for filter",
+            "required" : true,
+            "type" : "array",
+            "collectionFormat" : "multi",
+            "items" : {
+              "type" : "string"
+            },
             "parameterSchema" : {
               "type" : "array",
               "items" : {
-                "parameterSchema" : {
-                  "type" : "string"
-                },
                 "type" : "string",
                 "enum" : [ "available", "pending", "sold" ]
               }
-            },
-            "repeat" : true,
-            "name" : "status",
-            "description" : "Status values that need to be considered for filter",
-            "type" : "array",
-            "items" : {
-              "parameterSchema" : {
-                "type" : "string"
-              },
-              "_enum" : [ "available", "pending", "sold" ],
-              "type" : "string"
-            },
-            "collectionFormat" : "multi",
-            "required" : true
+            }
           } ],
           "responses" : {
             "200" : {
@@ -385,7 +432,20 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "200" : {
+              "responseBody" : {
+                "application/xml" : "<array><photoUrls>JjBUXDdQMesAWH</photoUrls><photoUrls>gLUmOvder</photoUrls><name>FpqkUnSVXDQM</name><id>1195820508</id><category><name>YPoDt</name><id>173512049</id></category><status>pending</status><tags><name>SrhuE</name><id>1941371734</id></tags></array>",
+                "application/json" : "[{\"photoUrls\":[\"PSIGda\"],\"name\":\"eLqpAuv\",\"id\":1452090825,\"category\":{\"name\":\"LqeFknMFYbDN\",\"id\":14073005},\"status\":\"sold\",\"tags\":[{\"name\":\"jOgTFSqRl\",\"id\":552971896},{\"name\":\"\",\"id\":1555344057}]}]"
+              }
+            },
+            "400" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "security" : [ {
             "petstore_auth" : [ "write:pets", "read:pets" ]
@@ -419,7 +479,14 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "default" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "enabled" : true,
           "scopes" : [ ],
@@ -449,20 +516,16 @@
           "consumes" : [ "multipart/form-data" ],
           "produces" : [ "application/json" ],
           "parameters" : [ {
-            "schema" : {
-              "format" : "int64",
-              "type" : "integer"
-            },
-            "in" : "path",
-            "parameterSchema" : {
-              "format" : "int64",
-              "type" : "integer"
-            },
             "name" : "petId",
-            "format" : "int64",
+            "in" : "path",
             "description" : "ID of pet to update",
+            "required" : true,
             "type" : "integer",
-            "required" : true
+            "format" : "int64",
+            "parameterSchema" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
           } ],
           "responses" : {
             "200" : {
@@ -481,7 +544,13 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "200" : {
+              "responseBody" : {
+                "application/json" : "{\"code\":148294969,\"message\":\"PK\",\"type\":\"sSmLpgjePTXcm\"}"
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "security" : [ {
             "petstore_auth" : [ "write:pets", "read:pets" ]
@@ -530,7 +599,13 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "200" : {
+              "responseBody" : {
+                "application/json" : "{}"
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "security" : [ {
             "api_key" : [ ]
@@ -554,29 +629,23 @@
           "operationId" : "loginUser",
           "produces" : [ "application/json", "application/xml" ],
           "parameters" : [ {
-            "schema" : {
-              "type" : "string"
-            },
-            "in" : "query",
-            "parameterSchema" : {
-              "type" : "string"
-            },
             "name" : "username",
-            "description" : "The user name for login",
-            "type" : "string",
-            "required" : true
-          }, {
-            "schema" : {
-              "type" : "string"
-            },
             "in" : "query",
+            "description" : "The user name for login",
+            "required" : true,
+            "type" : "string",
             "parameterSchema" : {
               "type" : "string"
-            },
+            }
+          }, {
             "name" : "password",
+            "in" : "query",
             "description" : "The password for login in clear text",
+            "required" : true,
             "type" : "string",
-            "required" : true
+            "parameterSchema" : {
+              "type" : "string"
+            }
           } ],
           "responses" : {
             "200" : {
@@ -611,7 +680,20 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "200" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            },
+            "400" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "enabled" : true,
           "scopes" : [ ],
@@ -642,7 +724,14 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "default" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "enabled" : true,
           "scopes" : [ ],
@@ -680,7 +769,14 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "default" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "enabled" : true,
           "scopes" : [ ],
@@ -709,34 +805,21 @@
           "operationId" : "findPetsByTags",
           "produces" : [ "application/json", "application/xml" ],
           "parameters" : [ {
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "type" : "string"
-              }
-            },
+            "name" : "tags",
             "in" : "query",
+            "description" : "Tags to filter by",
+            "required" : true,
+            "type" : "array",
+            "collectionFormat" : "multi",
+            "items" : {
+              "type" : "string"
+            },
             "parameterSchema" : {
               "type" : "array",
               "items" : {
-                "parameterSchema" : {
-                  "type" : "string"
-                },
                 "type" : "string"
               }
-            },
-            "repeat" : true,
-            "name" : "tags",
-            "description" : "Tags to filter by",
-            "type" : "array",
-            "items" : {
-              "parameterSchema" : {
-                "type" : "string"
-              },
-              "type" : "string"
-            },
-            "collectionFormat" : "multi",
-            "required" : true
+            }
           } ],
           "responses" : {
             "200" : {
@@ -771,7 +854,20 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "200" : {
+              "responseBody" : {
+                "application/xml" : "<array><photoUrls>LYcxIfQeYGihTj</photoUrls><photoUrls>hikvwgOtCAmUEK</photoUrls><name>hXJrKS</name><id>2121217251</id><category><name>fYoKNljB</name><id>226821162</id></category><status>sold</status><tags><name>Tk</name><id>739489035</id></tags><tags><name>LTy</name><id>1864580314</id></tags></array>",
+                "application/json" : "[{\"photoUrls\":[\"IPWutwsgYsfJ\"],\"name\":\"\",\"id\":468599250,\"category\":{\"name\":\"LHGMJtpWYYXC\",\"id\":16974441},\"status\":\"pending\",\"tags\":[{\"name\":\"DEccvHT\",\"id\":1085158511},{\"name\":\"lmroeirw\",\"id\":1066229416}]}]"
+              }
+            },
+            "400" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "security" : [ {
             "petstore_auth" : [ "write:pets", "read:pets" ]
@@ -827,7 +923,20 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "200" : {
+              "responseBody" : {
+                "application/xml" : "<petId>840983606</petId><quantity>1689198932</quantity><id>2059242769</id><complete>true</complete><shipDate>2020-06-25T03:12:28+0000</shipDate><status>delivered</status>",
+                "application/json" : "{\"petId\":2130872655,\"quantity\":1295560946,\"id\":1886919992,\"complete\":false,\"shipDate\":\"2020-06-28T17:06:54+0000\",\"status\":\"approved\"}"
+              }
+            },
+            "400" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "enabled" : true,
           "scopes" : [ ],
@@ -864,7 +973,14 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "default" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "enabled" : true,
           "scopes" : [ ],
@@ -885,20 +1001,16 @@
           "operationId" : "getPetById",
           "produces" : [ "application/json", "application/xml" ],
           "parameters" : [ {
-            "schema" : {
-              "format" : "int64",
-              "type" : "integer"
-            },
-            "in" : "path",
-            "parameterSchema" : {
-              "format" : "int64",
-              "type" : "integer"
-            },
             "name" : "petId",
-            "format" : "int64",
+            "in" : "path",
             "description" : "ID of pet to return",
+            "required" : true,
             "type" : "integer",
-            "required" : true
+            "format" : "int64",
+            "parameterSchema" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
           } ],
           "responses" : {
             "200" : {
@@ -939,7 +1051,26 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "200" : {
+              "responseBody" : {
+                "application/xml" : "<photoUrls>IwCxuOxrvQ</photoUrls><name>BiqRf</name><id>1115680161</id><category><name>FhQJNClvc</name><id>78326725</id></category><status>pending</status><tags><name>sqiQEw</name><id>1895373983</id></tags><tags><name>cAIqnBy</name><id>1908705313</id></tags>",
+                "application/json" : "{\"photoUrls\":[\"fcywUTU\",\"oiQnABHKAreuG\"],\"name\":\"RPhl\",\"id\":449220509,\"category\":{\"name\":\"EvDagVYGeM\",\"id\":118970828},\"status\":\"available\",\"tags\":[{\"name\":\"UMIEQww\",\"id\":81997210},{\"name\":\"r\",\"id\":1538519714}]}"
+              }
+            },
+            "400" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            },
+            "404" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "security" : [ {
             "api_key" : [ ]
@@ -959,20 +1090,16 @@
           "consumes" : [ "application/x-www-form-urlencoded" ],
           "produces" : [ "application/json", "application/xml" ],
           "parameters" : [ {
-            "schema" : {
-              "format" : "int64",
-              "type" : "integer"
-            },
-            "in" : "path",
-            "parameterSchema" : {
-              "format" : "int64",
-              "type" : "integer"
-            },
             "name" : "petId",
-            "format" : "int64",
+            "in" : "path",
             "description" : "ID of pet that needs to be updated",
+            "required" : true,
             "type" : "integer",
-            "required" : true
+            "format" : "int64",
+            "parameterSchema" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
           } ],
           "responses" : {
             "405" : {
@@ -984,7 +1111,14 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "405" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "security" : [ {
             "petstore_auth" : [ "write:pets", "read:pets" ]
@@ -1011,31 +1145,24 @@
           "operationId" : "deletePet",
           "produces" : [ "application/json", "application/xml" ],
           "parameters" : [ {
-            "schema" : {
-              "type" : "string"
-            },
-            "in" : "header",
-            "parameterSchema" : {
-              "type" : "string"
-            },
             "name" : "api_key",
+            "in" : "header",
+            "required" : false,
             "type" : "string",
-            "required" : false
-          }, {
-            "schema" : {
-              "format" : "int64",
-              "type" : "integer"
-            },
-            "in" : "path",
             "parameterSchema" : {
-              "format" : "int64",
-              "type" : "integer"
-            },
+              "type" : "string"
+            }
+          }, {
             "name" : "petId",
-            "format" : "int64",
+            "in" : "path",
             "description" : "Pet id to delete",
+            "required" : true,
             "type" : "integer",
-            "required" : true
+            "format" : "int64",
+            "parameterSchema" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
           } ],
           "responses" : {
             "400" : {
@@ -1055,7 +1182,20 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "400" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            },
+            "404" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "security" : [ {
             "petstore_auth" : [ "write:pets", "read:pets" ]
@@ -1079,20 +1219,16 @@
           "operationId" : "getOrderById",
           "produces" : [ "application/json", "application/xml" ],
           "parameters" : [ {
-            "schema" : {
-              "format" : "int64",
-              "type" : "integer"
-            },
-            "in" : "path",
-            "parameterSchema" : {
-              "format" : "int64",
-              "type" : "integer"
-            },
             "name" : "orderId",
-            "format" : "int64",
+            "in" : "path",
             "description" : "ID of pet that needs to be fetched",
+            "required" : true,
             "type" : "integer",
-            "required" : true
+            "format" : "int64",
+            "parameterSchema" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
           } ],
           "responses" : {
             "200" : {
@@ -1133,7 +1269,26 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "200" : {
+              "responseBody" : {
+                "application/xml" : "<petId>1525366770</petId><quantity>1179594653</quantity><id>1028699143</id><complete>false</complete><shipDate>2020-06-21T00:04:06+0000</shipDate><status>delivered</status>",
+                "application/json" : "{\"petId\":1452306681,\"quantity\":206682445,\"id\":1516275682,\"complete\":false,\"shipDate\":\"2020-06-22T03:12:28+0000\",\"status\":\"approved\"}"
+              }
+            },
+            "400" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            },
+            "404" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "enabled" : true,
           "scopes" : [ ],
@@ -1149,20 +1304,16 @@
           "operationId" : "deleteOrder",
           "produces" : [ "application/json", "application/xml" ],
           "parameters" : [ {
-            "schema" : {
-              "format" : "int64",
-              "type" : "integer"
-            },
-            "in" : "path",
-            "parameterSchema" : {
-              "format" : "int64",
-              "type" : "integer"
-            },
             "name" : "orderId",
-            "format" : "int64",
+            "in" : "path",
             "description" : "ID of the order that needs to be deleted",
+            "required" : true,
             "type" : "integer",
-            "required" : true
+            "format" : "int64",
+            "parameterSchema" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
           } ],
           "responses" : {
             "400" : {
@@ -1182,7 +1333,20 @@
               "headers" : { }
             }
           },
-          "mockedResponses" : { },
+          "mockedResponses" : {
+            "400" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            },
+            "404" : {
+              "responseBody" : {
+                "application/xml" : "",
+                "application/json" : ""
+              }
+            }
+          },
           "mockedConditionsBasedCustomResponsesList" : [ ],
           "enabled" : true,
           "scopes" : [ ],
@@ -1265,12 +1429,12 @@
   },
   "nativeEndpoint" : [ {
     "passSecurityHeaders" : true,
-    "uri" : "http://petstore.swagger.io/v2",
+    "uri" : "https://petstore.swagger.io/v2",
     "connectionTimeoutDuration" : 0,
     "alias" : false
   }, {
     "passSecurityHeaders" : true,
-    "uri" : "https://petstore.swagger.io/v2",
+    "uri" : "http://petstore.swagger.io/v2",
     "connectionTimeoutDuration" : 0,
     "alias" : false
   } ],
@@ -1290,5 +1454,8 @@
   "creationDate" : "2020-04-08 16:06:04 GMT",
   "lastModified" : "2020-04-21 07:44:23 GMT",
   "systemVersion" : 1,
+  "mockService" : {
+    "enableMock" : true
+  },
   "id" : "4ea2dcf0-66c5-469b-b822-fe4707c6f899"
 }
