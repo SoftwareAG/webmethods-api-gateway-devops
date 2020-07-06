@@ -39,7 +39,7 @@ node ("VMYAIBVT03L"){
 	
    stage('Test') {
 	   try {
-		if(${test_suite} == "all") {
+		if("${test_suite}" == "all") {
 		  test_folder = "all"
 		} else {
 		 test_folder = "${script_location}/${test_suite}"
