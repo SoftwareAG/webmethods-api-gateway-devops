@@ -41,7 +41,7 @@ node ("VMYAIBVT03L"){
    try {
     def tests = "${script_location}/${test_suite}"
 	if(${test_suite} == "all") {
-	 ${tests} = "all"
+	  tests = "all"
 	}
 	
    withEnv(["test_suite=${test_suite}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${tests}"]) {
