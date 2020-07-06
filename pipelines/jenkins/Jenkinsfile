@@ -10,7 +10,7 @@
  This pipeline by default runs on the master and uses the library methods present in bin/common.lib  
 */
 
-node ("vmyaibvt03l"){
+node ("VMYAIBVT03L"){
 
    def GIT_LOCATION = "https://github.com/SoftwareAG/webmethods-api-gateway-devops.git"
 
