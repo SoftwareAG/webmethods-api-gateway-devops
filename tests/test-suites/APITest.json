@@ -35,8 +35,8 @@
 						"description": ""
 					},
 					{
-						"key": "Content-length",
-						"value": "",
+						"key": "Connection",
+						"value": "keep-alive",
 						"description": ""
 					}
 				],
@@ -68,6 +68,11 @@
 					{
 						"key": "Accept",
 						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
 						"description": ""
 					}
 				],
