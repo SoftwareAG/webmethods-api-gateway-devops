@@ -39,12 +39,12 @@ node ("VMYAIBVT03L"){
 	
    stage('Test') {
    try {
-    tests = "${script_location}/${test_suite}"
 	if(${test_suite} == "all") {
 	  tests = "all"
+	} else {
+	 tests = "${script_location}/${test_suite}"
 	}
-	
-   withEnv(["test_suite=${test_suite}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
+	withEnv(["test_suite=${test_suite}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
 		dir("$bin_loc"){		
 			  sh '''
 				 source $bin_loc/common.lib; run_test_suite $tests "$script_location/tests/environment/qa_environment.json"  $apigateway_qa_url "$script_location/Results"
