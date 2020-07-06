@@ -22,14 +22,8 @@
 		"requests": [
 			{
 				"id": "fe11ad02-6261-ddad-dec7-6e5557f13461",
-				"headers": "Content-Type: application/json\nAccept: application/json\n",
+				"headers": "Accept: application/json\n",
 				"headerData": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": "",
-						"enabled": true
-					},
 					{
 						"key": "Accept",
 						"value": "application/json",
@@ -37,14 +31,12 @@
 						"enabled": true
 					}
 				],
-				"url": "{{httpInvokeUrl}}/gateway/Swagger%20Petstore/1.0.5/pet/",
+				"url": "{{httpInvokeUrl}}/gateway/Swagger%20Petstore/1.0.5/pet/123",
 				"queryParams": [],
 				"preRequestScript": null,
 				"pathVariables": {},
 				"pathVariableData": [],
-				"method": "POST",
-				"data": "{\r\n  \"id\": 123,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"doggie\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
-				"dataMode": "raw",
+				"method": "GET",
 				"tests": "tests[\"Check Status code is 200\"] = responseCode.code === 200;",
 				"currentHelper": "normal",
 				"helperAttributes": {},
@@ -85,14 +77,8 @@
 	"requests": [
 		{
 			"id": "fe11ad02-6261-ddad-dec7-6e5557f13461",
-			"headers": "Content-Type: application/json\nAccept: application/json\n",
+			"headers": "Accept: application/json\n",
 			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				},
 				{
 					"key": "Accept",
 					"value": "application/json",
@@ -100,14 +86,12 @@
 					"enabled": true
 				}
 			],
-			"url": "{{httpInvokeUrl}}/gateway/Swagger%20Petstore/1.0.5/pet/",
+			"url": "{{httpInvokeUrl}}/gateway/Swagger%20Petstore/1.0.5/pet/123",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
-			"method": "POST",
-			"data": "{\r\n  \"id\": 123,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"doggie\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
-			"dataMode": "raw",
+			"method": "GET",
 			"tests": "tests[\"Check Status code is 200\"] = responseCode.code === 200;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
