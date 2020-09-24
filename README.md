@@ -1,6 +1,8 @@
 # webmethods-api-gateway-devops
-This is a sample repository that a organization can have for its CI/CD for
-API Gateway assets.
+This repository is a sample repository for someone to get started with a DevOps flow for API Gateway assets.
+One can clone this repository then modify it to suite their organizational needs.
+
+
 
 
 The repository has the following folders
