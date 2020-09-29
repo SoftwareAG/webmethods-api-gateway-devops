@@ -2,6 +2,8 @@
 
 As each organization builds APIs using API Gateway for easy consumption and monetization, the continuous integration and delivery are integral part of the API Gateway solutions to get hold of the fast moving market. We need to automate the management of APIs and policies to speed up the deployment, introduce continuous integration concepts and place API artifacts under source code management. As new apps are deployed, the API definitions can change and those changes have to be propagated to other external products like API portal. This requires the API owner to update the associated documentation and in most cases this process is a tedious manual exercise. In order to address this issue, it is a key to bring in DevOps style automation to the API life cycle management process in API Gateway. With this, enterprises can deliver continuous innovation with speed and agility, ensuring that new updates and capabilities are automatically, efficiently and securely delivered to their developers and partners in a timely fashion and without manual intervention. This enables a team of API Gateway policy developers to work in parallel developing APIs and policies to be deployed as a single API Gateway configuration.
 
+
+
 ## API Gateway assets and configurations
 The following are the  API Gateway assets and configurations that can be moved across API Gateway stages.
  - Gateway APIs 
@@ -17,7 +19,7 @@ The following are the  API Gateway assets and configurations that can be moved a
  - Destination configurations
  - External accounts configurations
 
-## API Gateway Deployment assets
+## API Gateway Deployment
 API Gateway can be deployed with many flavors.
  - Standlone API Gateway with embedded elastic search.
  - Clustered API Gateway with embedded elastic search.
@@ -25,16 +27,21 @@ API Gateway can be deployed with many flavors.
  - Clustered API Gateway with external elastic search and Kibana.
  The docker compose files for these different deployment styles can be found at https://github.com/SoftwareAG/webmethods-api-gateway/tree/master/samples/docker/deploymentscripts
  
- ## CI/CD in API Gateway
- The CI/CD and devops flow can be acheived in 
+ ## Devops Automation and CI/CD in API Gateway
+ The CI/CD and devops flow can be acheived in multiple ways. 
+ ### Using webMethods Deployer and Asset Build environment
+  API Gateway asset binaries can be build using Asset Build environment and promoted across stages using WmDeployer. More information on this way of CI/CD and Devops automation can be found at http://techcommunity.softwareag.com/pwiki/-/wiki/Main/Staging%2C+Promotion+and+DevOps+of+API+Gateway+assets 
+ ### Using API Gateway promotion management.
+  The promotion APIs that are exposed by API Gateway can be used for the devops automation. More information on these APIs can be found at https://github.com/SoftwareAG/webmethods-api-gateway/blob/master/apigatewayservices/APIGatewayPromotionManagement.json
 
 # About this repository
 
 This repository is a sample repository for someone to get started with a DevOps flow for API Gateway assets.
 One can clone this repository then modify it to suite their organizational needs.
-
+The samples in this repository use the API Gateway Promotion APIs for automation of the Devops flow.
 
 The repository has the following folders
+
   - apis : Contains the API Gateway assets of the organization 
   - configuration : Contains staged specfic API Gateway Administration configurations.
   - deployment-descriptor : Contains staged specific docker compose files to create API Gateway environments.
