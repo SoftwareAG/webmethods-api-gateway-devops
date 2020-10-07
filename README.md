@@ -161,10 +161,15 @@ gateway_build.sh --apigateway_server_port 5558 --test_suite ../tests/test-suites
 ```
 
 # Pipelines
-The key to proper devops is is continuous integration and continuous deployment. Organizations use standard tools such as Jenkins and Azure to design their 
-intergration and assuring continous delivery. This repository contains a sample Jenkins and Azure pipline that can be used by an organization the continuous integration
-of their APIs from developing them to deliver them to their customers.
-These pipelines depicts how an API(project) that is present in VCS can be promoted to an API Gateway Prod environment  after testing it in the  API Gateway QA environment. The API(project) is imported in the QA environment and after running tests it is promoted to the Prod using the Promotion mangement APIs.  
+ The key to proper devops is is continuous integration and continuous deployment. Organizations use standard tools such as Jenkins and Azure to design their 
+intergration and assuring continous delivery.
+ This repository contains a sample Jenkins and Azure pipline that can be used by an organization the continuous integration
+of their APIs from developing them to deliver them to their customers.These pipelines depicts how an API(project) that is present in VCS can be promoted to an API Gateway Prod environment  after testing it in the  API Gateway QA environment. The API(project) is imported in the QA environment and after running tests it is promoted to the Prod using the Promotion mangement APIs.  
 
 ![GitHub Logo](/images/devopsFlow.png)
+
+References
+-  Jenkins Pipelines https://www.jenkins.io/doc/book/pipeline/
+-  Azure pipelines https://azure.microsoft.com/en-in/services/devops/pipelines/
+
 
