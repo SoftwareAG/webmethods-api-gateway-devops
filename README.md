@@ -26,6 +26,7 @@ API Gateway can be deployed with many flavors.
  - Clustered API Gateway with embedded elastic search.
  - Standalone API Gateway with external elastic search and Kibana.
  - Clustered API Gateway with external elastic search and Kibana.
+ 
  The docker compose files for these different deployment styles can be found at https://github.com/SoftwareAG/webmethods-api-gateway/tree/master/samples/docker/deploymentscripts
  
  ## Devops Automation and CI/CD in API Gateway
@@ -51,12 +52,30 @@ The repository has the following folders
   - bin : Library scripts that are used to create API Gateway environments, Develop assets and test them.
   - pipelines : Contains some sample Jenkins and the Azure pipelines as an insight for organizations. 
   
-# Create an API Gateway environment
-The gateway-setup.sh can be used to create stage specific API Gateway environment. 
-The Docker compose files are present at deployment-descriptors.
-Dev and Build stages are single node instances and QA and Prod are
-3 node clusters.
-# Parameters
+# Devops CI/CD usecases
+
+This github project contains the scripts that can perform some of the basic Devops and automation 
+of APIs using API Gateway.
+
+## Creating Staged API Gateway environment
+ 
+ Organizations will have to create a staged API Gateway environment which would help them with agile
+developement of APIs and continious delivery. A typical organization will have a Dev,QA and Prod environments of 
+API Gateway.
+ This Github project contains some sample deployment descriptors under /deployment-descriptors which are 
+docker compose files to create staged API Gateways.
+By default the deployment-descriptors has the following configurations.
+ - build enviroment that creates a single-node API Gateway. This is mostly for building APIs in a developer machine and assert them with the tests.
+ - dev enviroment that creates a single-node API Gateway.
+ - qa and prod environements which are three node clustered API Gateways with a ng-inx load balancer.
+
+More examples with different flavors of deployment can be found at  
+https://github.com/SoftwareAG/webmethods-api-gateway/tree/master/samples/docker/deploymentscripts. 
+
+
+### The gateway-setup.sh
+The gateway-setup.sh under /bin can be uses these deployment descriptors and create the environments.
+
 | Parameter | Description |
 | ------ | ------ |
 | stage |  Possible value are build,dev,qa,prod. |
@@ -77,6 +96,10 @@ To clean up the created environment
 ```sh
  $ gateway_setup.sh --stage dev --cleanup
 ```
+
+More examples of deployment-descriptors with different flavors of API Gateway deployment can be found at  https://github.com/SoftwareAG/webmethods-api-gateway/tree/master/samples/docker/deploymentscripts.
+One can clone this repository and add their staging environments under /deployment-descriptors  and use them in the scripts.
+
 # Develop APIs and test
 The gateway_import_export_utils.sh can be used for developers import and export APIs(projects)  as a flat file representation of the VCS.
 
