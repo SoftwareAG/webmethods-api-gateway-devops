@@ -157,12 +157,56 @@ gateway_build.sh --apigateway_server_port 5558 --test_suite ../tests/test-suites
 The key to proper devops is is continuous integration and continuous deployment. Organizations use standard tools such as Jenkins and Azure to design their 
 intergration and assuring continous delivery.
 
-This repository contains a sample Jenkins and Azure pipline that can be used by an organization for continuous integration & deployment of their APIs from developing them to deliver them to their customers.These pipelines depicts how an API(project) that is present in VCS can be promoted to an API Gateway Prod environment  after testing it in the  API Gateway QA environment. The API(project) is imported in the QA environment and after running tests it is promoted to the Prod using the Promotion mangement APIs.  
-
-![GitHub Logo](/images/devopsFlow.png)
+This repository contains a sample Jenkins and Azure pipline that can be used by an organization for continuous integration & deployment of their APIs from developing them to deliver them to their customers.These pipelines depicts how an API(project) that is present in VCS can be promoted to an API Gateway Prod environment  after testing it in the  API Gateway QA environment. 
 
 References
 -  Jenkins Pipelines https://www.jenkins.io/doc/book/pipeline/
 -  Azure pipelines https://azure.microsoft.com/en-in/services/devops/pipelines/
 
+# Example
+A sample CI/CD flow starting from a API Developer to propage the change to Prod depicted in the below image
 
+![GitHub Logo](/images/devopsFlow.png)
+
+Lets consider this example
+ - An API developer  wants to make a change to the petstore API of his organization. All of the orgs apis are available in VCS 
+whose local repo is present under the /apis folder(in our sample Git). This flat file representation of the API should be converted and imported into his local development enviroment for changes to be made.
+  For this he uses the /bin/gateway_import_export_utils.sh to do this and import this API to the mydev.apigateway:5556.
+  ```sh 
+   /bin/gateway_import_export_utils.sh  --import --api_name petstore --apigateway_url http://mydev.apigateway:5556
+  ```
+  - The API Developer makes his changes to the petstore API. 
+  - The API developer needs to now the change that he has made has not affected his orgs business and other APIs.
+For this he needs to run the set of function/regression tests over his change before hand the change gets propagated to the 
+next stage. To run the set of tests in the developer instance he can use the /bin/gateway_build.sh
+  ```sh 
+   /bin/gateway_build.sh --apigateway_image mycompany_apigateway_image:latest --apigateway_server_port 5558 --apigateway_ui_port 9075  --apigateway_es_port 9243 --test_suite \*
+  ```
+  This would create a docker instance of API Gateway and run all the tests.This sample repository contains a simple set of Regression tests for the petstore API.These are located under /tests folder.
+  
+  - Now this change made by the API developer has to be pushed back to the VCS system such that this propogates to the next stage.i.e Convert(export) the API in the Dev machine to the Local repository which is /apis. This can be done by executing the following command
+  ```sh 
+   /bin/gateway_import_export_utils.sh  --export --api_name petstore --apigateway_url http://localhost:5556
+  ```
+> Note : In case the API developer needs to create an API from scratch that is not availabe already , then he skips the first step.
+  
+  - After this is done the changes from the Developers local repo is commited to the VCS. 
+  
+  -  Continuous integration and automation is usally acheived with the help of CI/CD tools like Jenkins/Azure pipelines.
+One can configure webhooks over their VCS systems that can get triggered when an change is commited to the repository.
+This way an API Gateway QA manager can go ahead and configure webhooks to listen to changes in their API repository.
+Please refer to https://plugins.jenkins.io/generic-webhook-trigger/ for configuring webhooks over Jenkins and 
+https://docs.microsoft.com/en-us/azure/devops/service-hooks/services/webhooks?view=azure-devops for Azure pipelines.
+
+ - The sample piplines given in this repository are present under /pipelines that do the following.
+   - Checkout from the VCS system all the apis.
+   - Build and test them
+   - Rollout to the higher stage that is done by executing the Promotion mangement APIs of API Gateway.
+   
+   These pipelines get executed as a result of the webhook that takes care of validating the APIs and on succesful test results doing a promotion of the APIs to higher stages.
+   
+   > Note : The jenkins pipline uses the jenkins.properties file that contains an variable 'api_project' to promote specific API alone to the next stage. In Azure this is acheived by an inline parameter 'apiProject'
+   
+   ## Variable substitutions
+   With CI/CD the very obvious usecase for an API developer is to make use of different values for configurations at 
+different stages. We acheive this in SoftwareaAG webmethods API Gateway with the help of Aliases.Differnt Aliases for different stages can be created and during promotion of the APIs the respective respective stage specific alias values  are used and promoted. In our petstore sample we have use an routing Alias that can have different values for different stages.
