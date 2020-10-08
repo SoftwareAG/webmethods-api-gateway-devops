@@ -5,7 +5,7 @@ As each organization builds APIs using API Gateway for easy consumption and mone
 ![GitHub Logo](/images/api.png)
 
 
-## SoftwareAG webmethods API Gateway assets and configurations
+## webMethods API Gateway assets and configurations
 The following are the  API Gateway assets and configurations that can be moved across API Gateway stages.
  - Gateway APIs 
  - Policy Definitions/Policy Templates/Global Policies 
@@ -20,8 +20,8 @@ The following are the  API Gateway assets and configurations that can be moved a
  - Destination configurations
  - External accounts configurations
 
-## SoftwareAG webmethods API Gateway deployment
-SoftwareAG webmethods API Gateway can be deployed with many flavors.
+## webMethods API Gateway deployment
+webMethods API Gateway can be deployed with many flavors.
  - Standlone API Gateway with embedded elastic search.
  - Clustered API Gateway with embedded elastic search.
  - Standalone API Gateway with external elastic search and Kibana.
@@ -29,7 +29,7 @@ SoftwareAG webmethods API Gateway can be deployed with many flavors.
  
  The docker compose files for these different deployment styles can be found at https://github.com/SoftwareAG/webmethods-api-gateway/tree/master/samples/docker/deploymentscripts
  
- ## Devops Automation and CI/CD in SoftwareAG webmethods API Gateway
+ ## Devops and CI/CD in webMethods API Gateway
  The CI/CD and devops flow can be acheived in multiple ways. 
  ### Using webmethods Deployer and Asset Build environment
   API Gateway asset binaries can be build using Asset Build environment and promoted across stages using WmDeployer. More information on this way of CI/CD and Devops automation can be found at http://techcommunity.softwareag.com/pwiki/-/wiki/Main/Staging%2C+Promotion+and+DevOps+of+API+Gateway+assets 
@@ -38,8 +38,8 @@ SoftwareAG webmethods API Gateway can be deployed with many flavors.
 
 # About this repository
 
-This repository is a sample repository for someone to get started with a DevOps flow for SoftwareAG webmethods API Gateway assets.
-One can clone this repository then modify it to suite their organizational needs.
+This repository provides assets/scripts for users to setup an CI/CD for API Gateway assets. Please note, the assets/scripts/methods provided in this repository explains one of the ways of setting up the CI/CD and not the only way. The samples provided are mainly to explain the capabilities and not be used as-is. One can clone this repository, then modify it to suite their organizational needs - for example, have different number of environments, different type of deployment (Kubernetes based) etc.
+
 The samples in this repository use the API Gateway Promotion APIs for automation of the Devops flow.
 
 The repository has the following folders
@@ -54,17 +54,13 @@ The repository has the following folders
   
 # Devops CI/CD usecases
 
+This github project contains the scripts that can help setup simple CI/CD flow for APIs using API Gateway.
 
-This github project contains the scripts that can perform some of the basic Devops and automation 
-of APIs using API Gateway.
-
-## Creating Staged SoftwareAG webmethods API Gateway environment
+## Creating Staged webMethods API Gateway environment
  
- Organizations will have to create a staged API Gateway environment which would help them with agile
-developement of APIs and continious delivery. A typical organization will have a Dev,QA and Prod environments of 
-API Gateway.
- This Github project contains some sample deployment descriptors under /deployment-descriptors which are 
-docker compose files to create staged API Gateways.
+Organizations will have to create a staged API Gateway environments which would help them with agile developement of APIs and continious delivery. A typical organization will have a Dev,QA and Prod environments of API Gateway.
+
+This Github project contains sample deployment descriptors under /deployment-descriptors which are docker compose files to create staged API Gateways.
 By default the deployment-descriptors has the following configurations.
  - build enviroment that creates a single-node API Gateway. This is mostly for building APIs in a developer machine and assert them with the tests.
  - dev enviroment that creates a single-node API Gateway.
@@ -75,7 +71,7 @@ https://github.com/SoftwareAG/webmethods-api-gateway/tree/master/samples/docker/
 
 
 ### gateway-setup.sh
-The gateway-setup.sh under /bin can be uses these deployment descriptors and create the environments.
+The gateway-setup.sh under /bin uses these deployment descriptors and create the environments.
 
 | Parameter | Description |
 | ------ | ------ |
@@ -101,14 +97,11 @@ To clean up the created environment
 More examples of deployment-descriptors with different flavors of API Gateway deployment can be found at  https://github.com/SoftwareAG/webmethods-api-gateway/tree/master/samples/docker/deploymentscripts.
 One can clone this repository and add their staging environments under /deployment-descriptors  and use them in the scripts.
 
-# Develop APIs and test using SoftwareAG webmethods API Gateway
+# Develop APIs and test using API Gateway
 
-The most common usecase for an API Developer is to develop APIs in their local dev environments and then
-export them to falt file representation such that they can be be integrated to any VCS.
-Also Developers need to import their APIs from an VCS i.e flat file representation to theri local dev environments
-such that they can work on them.
-The gateway_import_export_utils.sh under /bin can be used for this. Using this script the developers can import/export
-APIs from their local Dev SoftwareAG webmethods API Gateway to their VCS local repo and vice versa.
+The most common usecase for an API Developer is to develop APIs in their local dev environments and then export them to flat file representation such that they can be  integrated to any VCS. Also Developers need to import their APIs from an VCS i.e flat file representation to their local dev environments for further updates.
+
+The gateway_import_export_utils.sh under /bin can be used for this. Using this script the developers can import/export APIs from their local Dev API Gateway to their VCS local repo and vice versa.
 
 ## gateway_import_export_utils.sh
 
@@ -161,10 +154,10 @@ gateway_build.sh --apigateway_server_port 5558 --test_suite ../tests/test-suites
 ```
 
 # Pipelines
- The key to proper devops is is continuous integration and continuous deployment. Organizations use standard tools such as Jenkins and Azure to design their 
+The key to proper devops is is continuous integration and continuous deployment. Organizations use standard tools such as Jenkins and Azure to design their 
 intergration and assuring continous delivery.
- This repository contains a sample Jenkins and Azure pipline that can be used by an organization the continuous integration
-of their APIs from developing them to deliver them to their customers.These pipelines depicts how an API(project) that is present in VCS can be promoted to an API Gateway Prod environment  after testing it in the  API Gateway QA environment. The API(project) is imported in the QA environment and after running tests it is promoted to the Prod using the Promotion mangement APIs.  
+
+This repository contains a sample Jenkins and Azure pipline that can be used by an organization for continuous integration & deployment of their APIs from developing them to deliver them to their customers.These pipelines depicts how an API(project) that is present in VCS can be promoted to an API Gateway Prod environment  after testing it in the  API Gateway QA environment. The API(project) is imported in the QA environment and after running tests it is promoted to the Prod using the Promotion mangement APIs.  
 
 ![GitHub Logo](/images/devopsFlow.png)
 
