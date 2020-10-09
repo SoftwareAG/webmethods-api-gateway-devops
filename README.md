@@ -154,10 +154,9 @@ gateway_build.sh --apigateway_server_port 5558 --test_suite ../tests/test-suites
 ```
 
 # Pipelines
-The key to proper devops is is continuous integration and continuous deployment. Organizations use standard tools such as Jenkins and Azure to design their 
-intergration and assuring continous delivery.
+The key to proper devops is continuous integration and continuous deployment. Organizations use standard tools such as Jenkins and Azure to design their integration and assuring continous delivery.
 
-This repository contains a sample Jenkins and Azure pipline that can be used by an organization for continuous integration & deployment of their APIs from developing them to deliver them to their customers.These pipelines depicts how an API(project) that is present in VCS can be promoted to an API Gateway Prod environment  after testing it in the  API Gateway QA environment. 
+This repository contains a sample Jenkins and Azure pipline that can be used by an organization for continuous integration & deployment of their APIs from developing them to delivering them to their consumers.These pipelines depict how an API(project) that is present in VCS can be promoted to across different API Gateway environments.
 
 References
 -  Jenkins Pipelines https://www.jenkins.io/doc/book/pipeline/
@@ -169,22 +168,20 @@ A sample CI/CD flow starting from a API Developer to propage the change to Prod 
 ![GitHub Logo](/images/devopsFlow.png)
 
 Lets consider this example
- - An API developer  wants to make a change to the petstore API of his organization. All of the orgs apis are available in VCS 
-whose local repo is present under the /apis folder(in our sample Git). This flat file representation of the API should be converted and imported into his local development enviroment for changes to be made.
-  For this he uses the /bin/gateway_import_export_utils.sh to do this and import this API to the mydev.apigateway:5556.
+ - An API developer  wants to make a change to the petstore API. All of the apis of the organization are available in VCS whose local repo is present under the /apis folder. This flat file representation of the API should be converted and imported into the developer's local development API Gateway enviroment for changes to be made.
+  For this the user uses the /bin/gateway_import_export_utils.sh to do this and import this API to the mydev.apigateway:5556.
   ```sh 
    /bin/gateway_import_export_utils.sh  --import --api_name petstore --apigateway_url http://mydev.apigateway:5556
   ```
-  - The API Developer makes his changes to the petstore API. 
-  - The API developer needs to now the change that he has made has not affected his orgs business and other APIs.
-For this he needs to run the set of function/regression tests over his change before hand the change gets propagated to the 
-next stage. To run the set of tests in the developer instance he can use the /bin/gateway_build.sh
+  - The API Developer makes the necessary changes to the petstore API. 
+  - The API developer needs to ensure that the change that were made does not cause regressions. For this, the user needs to run the set of function/regression tests over his change before hand the change gets propagated to the next stage. 
+  To run the set of tests in the developer instance he can use the /bin/gateway_build.sh
   ```sh 
    /bin/gateway_build.sh --apigateway_image mycompany_apigateway_image:latest --apigateway_server_port 5558 --apigateway_ui_port 9075  --apigateway_es_port 9243 --test_suite \*
   ```
   This would create a docker instance of API Gateway and run all the tests.This sample repository contains a simple set of Regression tests for the petstore API.These are located under /tests folder.
   
-  - Now this change made by the API developer has to be pushed back to the VCS system such that this propogates to the next stage.i.e Convert(export) the API in the Dev machine to the Local repository which is /apis. This can be done by executing the following command
+  - Now this change made by the API developer has to be pushed back to the VCS system such that this propogates to the next stage.i.e Convert(export) the API in the development environment to the local repository /apis. This can be done by executing the following command
   ```sh 
    /bin/gateway_import_export_utils.sh  --export --api_name petstore --apigateway_url http://localhost:5556
   ```
@@ -192,9 +189,8 @@ next stage. To run the set of tests in the developer instance he can use the /bi
   
   - After this is done the changes from the Developers local repo is commited to the VCS. 
   
-  -  Continuous integration and automation is usally acheived with the help of CI/CD tools like Jenkins/Azure pipelines.
+  -  Continuous integration and automation is usually acheived with the help of CI/CD tools like Jenkins/Azure pipelines.
 One can configure webhooks over their VCS systems that can get triggered when an change is commited to the repository.
-This way an API Gateway QA manager can go ahead and configure webhooks to listen to changes in their API repository.
 Please refer to https://plugins.jenkins.io/generic-webhook-trigger/ for configuring webhooks over Jenkins and 
 https://docs.microsoft.com/en-us/azure/devops/service-hooks/services/webhooks?view=azure-devops for Azure pipelines.
 
@@ -208,5 +204,5 @@ https://docs.microsoft.com/en-us/azure/devops/service-hooks/services/webhooks?vi
    > Note : The jenkins pipline uses the jenkins.properties file that contains an variable 'api_project' to promote specific API alone to the next stage. In Azure this is acheived by an inline parameter 'apiProject'
    
    ## Variable substitutions
-   With CI/CD the very obvious usecase for an API developer is to make use of different values for configurations at 
-different stages. We acheive this in SoftwareaAG webmethods API Gateway with the help of Aliases.Differnt Aliases for different stages can be created and during promotion of the APIs the respective respective stage specific alias values  are used and promoted. In our petstore sample we have use an routing Alias that can have different values for different stages.
+   With CI/CD, one of the common usecases is to make use of different values for configurations at different stages.  In this example, we have used stage specific aliases to demonstrate the use of different configurations for different environments. Aliases can be configured for different stages with different values and during promotion of the APIs, the respective stage specific alias values are used and promoted. In our petstore sample, we have use an routing Alias that can have different backend API endpoint values for different stages.
+   Besides Aliases, admin configurations can be maintained independently of the API projects under the /configurations folder. One can export the admin configuration through the Export APIs (https://github.com/SoftwareAG/webmethods-api-gateway/blob/master/apigatewayservices/APIGatewayArchive.json) and maintain them under the /configurations folder specific to environments and use the Import APIs to import them back when a new instance of the environment is created. One can also use externalized configurations (http://techcommunity.softwareag.com/pwiki/-/wiki/Main/Starting%20API%20Gateway%20using%20externalized%20configurations) to inject different configurations for different environments. Currently, not all the admin configurations are available through externalized configurations though.
