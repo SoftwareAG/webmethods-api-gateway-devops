@@ -203,6 +203,15 @@ https://docs.microsoft.com/en-us/azure/devops/service-hooks/services/webhooks?vi
    
    > Note : The jenkins pipline uses the jenkins.properties file that contains an variable 'api_project' to promote specific API alone to the next stage. In Azure this is acheived by an inline parameter 'apiProject'
    
+   ## Environment based configurations
+   One other most common scenario for a staged API Gateway environment is different configuration values for different stages. This repository contains this staged configurations under the folder '/configurations'. The samples configurations are
+   - dev stage containing a logConfig that would set the logging level to debug with no load balancer.
+   - qa stage containing a different set of Load balancing configurations.
+   - prod stage containing a different set of Load balancing configurations.
+   
+   Importing this configuration to the staged API Gateway can be managed using the gateway-setup.sh and the parameter import_configurations=true. 
+   
+   
    ## Variable substitutions
    With CI/CD, one of the common usecases is to make use of different values for configurations at different stages.  In this example, we have used stage specific aliases to demonstrate the use of different configurations for different environments. Aliases can be configured for different stages with different values and during promotion of the APIs, the respective stage specific alias values are used and promoted. In our petstore sample, we have use an routing Alias that can have different backend API endpoint values for different stages.
   Besides Aliases, admin configurations can be maintained independently of the API projects under the /configuration folder. One can export the admin configuration and maintain them under the /configuration folder specific to environments and import them back when a new instance of the environment is created. One can also use externalized configurations (http://techcommunity.softwareag.com/pwiki/-/wiki/Main/Starting%20API%20Gateway%20using%20externalized%20configurations) to inject different configurations for different environments. Currently, not all the admin configurations are available through externalized configurations though.
