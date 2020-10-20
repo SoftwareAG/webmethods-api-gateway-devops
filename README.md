@@ -56,15 +56,14 @@ The repository has the following folders
 
 This github project contains the scripts that can help setup simple CI/CD flow for APIs using API Gateway.
 
-## Creating Staged webMethods API Gateway environment
+## API Gateway environments
  
-Organizations will have to create a staged API Gateway environments which would help them with agile developement of APIs and continious delivery. A typical organization will have a Dev,QA and Prod environments of API Gateway.
+This sample project contains deployment descriptors under /deployment-descriptors (docker-compose files) to create different API Gateway environments (Dev, QA and Prod).
 
-This Github project contains sample deployment descriptors under /deployment-descriptors which are docker compose files to create staged API Gateways.
-By default the deployment-descriptors has the following configurations.
- - build enviroment that creates a single-node API Gateway. This is mostly for building APIs in a developer machine and assert them with the tests.
- - dev enviroment that creates a single-node API Gateway.
- - qa and prod environements which are three node clustered API Gateways with a ng-inx load balancer.
+The deployment-descriptors are available to create following environments,
+ - build enviroment, a single-node API Gateway. This is mostly for building APIs in a developer machine and assert them with the tests.
+ - dev enviroment, a single-node API Gateway for development
+ - qa and prod environements which are three node clustered API Gateways with a nginx load balancer.
 
 More examples with different flavors of deployment can be found at  
 https://github.com/SoftwareAG/webmethods-api-gateway/tree/master/samples/docker/deploymentscripts. 
