@@ -1,0 +1,26 @@
+{
+  "id" : "9a167b6b-18d0-4706-90f0-38eeb97efba4",
+  "names" : [ {
+    "value" : "Default Policy for API Simple Inventory API",
+    "locale" : "English"
+  } ],
+  "descriptions" : [ {
+    "value" : "",
+    "locale" : "English"
+  } ],
+  "policyEnforcements" : [ {
+    "enforcements" : [ {
+      "enforcementObjectId" : "f5191743-bf82-400f-8ffe-20a98cefacd7"
+    } ],
+    "stageKey" : "transport"
+  }, {
+    "enforcements" : [ {
+      "enforcementObjectId" : "31eda6aa-0c20-4956-99f3-ccf40e284e31"
+    } ],
+    "stageKey" : "routing"
+  } ],
+  "policyScope" : "SERVICE",
+  "global" : false,
+  "active" : false,
+  "systemPolicy" : false
+}

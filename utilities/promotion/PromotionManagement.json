@@ -1,0 +1,36 @@
+{
+	"variables": [],
+	"info": {
+		"name": "APIGatewayPromotionManagement",
+		"_postman_id": "0383b7ef-ea8c-e063-b87e-5daa0413912e",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PromoteAssets",
+			"request": {
+				"url": "{{url}}/rest/apigateway/promotion",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "{{auth}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"description\": \"Promotion Set to promote to Prod\",\r\n\t\"name\": \"{{buildNumber}}\",\r\n\t\"destinationStages\": [\r\n\t\t\"{{higherStageKey}}\"\r\n\t],\r\n\t\"promotedAssets\": {{promotion_data}}\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,79 @@
+/*
+ This pipeline depicts how an API(project) that is present 
+ in VCS can be promoted to an API Gateway Prod environment  after testing it in the 
+ API Gateway QA environment.
+ The API(project) is imported in the QA environment and after running tests it is promoted
+ to the Prod using the Promotion mangement APIs.
+ The details of the API Gateway QA environment is provied in the jenkins.properties and the 
+ API Gateway Prod environment is created as a stage in the API Gateway QA environment
+ The project to be built is provided in jenkins.properties.
+ This pipeline by default runs on the master and uses the library methods present in bin/common.lib  
+*/
+
+node ("master"){
+
+    def GIT_LOCATION = "https://github.com/SoftwareAG/webmethods-api-gateway-devops.git"
+
+	def workspace = pwd()
+	def script_location = "${workspace}/apigateway"
+	def COMMON_LIB_LOCATION = "${script_location}/bin"
+    def test_folder = ""
+	def test_results = "true"
+	
+
+	stage('Checkout') {
+		 checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'apigateway']], submoduleCfg: [], userRemoteConfigs: [[url: "${GIT_LOCATION}"]]])
+	}
+
+    load "${script_location}/pipelines/jenkins/jenkins.properties"
+
+	stage('BuildAndDeploy') {
+		withEnv(["api_project=${api_project}","apigateway_qa_url=${apigateway_qa_url}","apigateway_qa_username=${apigateway_qa_username}","apigateway_qa_password=${apigateway_qa_password}","bin_loc=${COMMON_LIB_LOCATION}"]) {
+
+			dir("$bin_loc"){		
+			  sh '''
+				 source $bin_loc/common.lib; import_api $api_project $apigateway_qa_url $apigateway_qa_username $apigateway_qa_password
+			   '''
+			 }
+		  }
+	}
+	
+   stage('Test') {
+	   try {
+		if("${test_suite}" == "all") {
+		  test_folder = "all"
+		} else {
+		 test_folder = "${script_location}/${test_suite}"
+		}
+		withEnv(["test_suite=${test_folder}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
+			dir("$bin_loc"){		
+				  sh '''
+					 source $bin_loc/common.lib; run_test_suite $test_suite "$script_location/tests/environment/qa_environment.json"  $apigateway_qa_url "$script_location/Results"
+				   '''
+				 }
+			  }
+
+		} catch(err) {
+		    test_results = "false"
+			echo "Exception: ${err}"
+		} finally {
+			junit 'apigateway/Results/*.xml'
+		}
+	}
+	
+	
+	
+	stage('Rollout') {
+	    if(test_results == "false"){
+		  echo "Tests have failed. Not promoting."
+		}
+		else{
+			withEnv(["api_project=${api_project}","apigateway_qa_url=${apigateway_qa_url}","bin_loc=${COMMON_LIB_LOCATION}","script_location=${script_location}"]) {
+					dir("$bin_loc"){		
+						  sh " source $bin_loc/common.lib; promote_api $api_project \"${script_location}/tests/environment/qa_environment.json\" \"httpInvokeUrl=$apigateway_qa_url;buildNumber=\"${currentBuild.number}\"\""
+						 }
+					  }
+	    }
+	}
+   
+}

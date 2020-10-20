@@ -1,0 +1,106 @@
+{
+	"id": "125e0945-21f4-b503-9e71-b5a02855eb35",
+	"name": "APITest",
+	"allTests": [],
+	"timestamp": 1587288448671,
+	"collection_id": "0e1201f0-cba6-52c3-6fe5-ff5b53c85d2f",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "b4066c8d-37e1-317b-b480-109e588daa6a",
+	"data": [],
+	"delay": 0,
+	"count": 50,
+	"collection": {
+		"id": "0e1201f0-cba6-52c3-6fe5-ff5b53c85d2f",
+		"name": "APITest",
+		"description": "",
+		"order": [
+			"fe11ad02-6261-ddad-dec7-6e5557f13461"
+		],
+		"folders": [],
+		"folders_order": [],
+		"requests": [
+			{
+				"id": "fe11ad02-6261-ddad-dec7-6e5557f13461",
+				"headers": "Accept: application/json\n",
+				"headerData": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "",
+						"enabled": true
+					}
+				],
+				"url": "{{httpInvokeUrl}}/gateway/Swagger%20Petstore/1.0.5/pet/123",
+				"queryParams": [],
+				"preRequestScript": null,
+				"pathVariables": {},
+				"pathVariableData": [],
+				"method": "GET",
+				"tests": "tests[\"Check Status code is 200\"] = responseCode.code === 200;",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1587278881266,
+				"name": "PostPet",
+				"description": "",
+				"collectionId": "0e1201f0-cba6-52c3-6fe5-ff5b53c85d2f",
+				"responses": []
+			}
+		],
+		"timestamp": 0,
+		"synced": true,
+		"syncedFilename": "",
+		"remote_id": 0,
+		"remoteLink": "",
+		"remoteLinkUpdatedAt": null,
+		"public": false,
+		"owner": 0,
+		"subscribed": false,
+		"createdAt": 1587278451917,
+		"updatedAt": 1587278547305,
+		"write": true,
+		"published": false,
+		"favorite": false,
+		"permissions": {},
+		"syncedPermissions": {},
+		"sharedWithTeam": false
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [],
+	"results": [],
+	"totalPass": 0,
+	"totalFail": 0,
+	"totalTime": 0,
+	"lifecycle": "running",
+	"willStop": false,
+	"requests": [
+		{
+			"id": "fe11ad02-6261-ddad-dec7-6e5557f13461",
+			"headers": "Accept: application/json\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{httpInvokeUrl}}/gateway/Swagger%20Petstore/1.0.5/pet/123",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"tests": "tests[\"Check Status code is 200\"] = responseCode.code === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1587278881266,
+			"name": "PostPet",
+			"description": "",
+			"collectionId": "0e1201f0-cba6-52c3-6fe5-ff5b53c85d2f",
+			"responses": []
+		}
+	],
+	"synced": false
+}

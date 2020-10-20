@@ -1,0 +1,39 @@
+version: "3.4"
+services:
+  load_balancer:
+    image: nginx
+    ports:
+    - "${apigateway_server_port}:5555"
+    - "${apigateway_ui_port}:9072"
+    - "${apigateway_es_port}:9240"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - apigw-cluster
+  terracotta_server:
+   image: ${terracotta_image}
+   hostname: terracotta_server
+   ports :
+     - "9510:9510"
+   networks:
+     - apigw-cluster
+  server1:
+   image: ${apigateway_image}
+   hostname: server1
+   env_file: cluster_props
+   networks:
+     - apigw-cluster
+  server2:
+   image: ${apigateway_image}
+   hostname: server2
+   env_file: cluster_props
+   networks:
+     - apigw-cluster
+  server3:
+   image: ${apigateway_image}
+   hostname: server3
+   env_file: cluster_props
+   networks:
+    - apigw-cluster
+networks:
+   apigw-cluster:

@@ -1,0 +1,21 @@
+{
+  "configId" : "logConfig",
+  "userName" : "Administrator",
+  "internalPorts" : { },
+  "properties" : {
+    "logDestination" : "",
+    "hostName" : "",
+    "indexName" : "",
+    "enableLogAggregation" : "false",
+    "userName" : "",
+    "protocol" : "HTTP",
+    "password" : "********************************",
+    "kibanaLogger" : "verbose",
+    "enableSecurityLogger" : "false",
+    "sagOsgiLogger" : "debug",
+    "port" : "",
+    "enableSessionLogger" : "false",
+    "apigatewayLogger" : "debug",
+    "elasticSearchLogger" : "debug"
+  }
+}

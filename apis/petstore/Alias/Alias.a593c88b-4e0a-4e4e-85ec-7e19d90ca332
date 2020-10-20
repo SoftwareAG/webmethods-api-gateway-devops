@@ -1,0 +1,7 @@
+{
+  "id" : "a593c88b-4e0a-4e4e-85ec-7e19d90ca332",
+  "name" : "PetStore_Routing_Alias",
+  "type" : "simple",
+  "owner" : "Administrator",
+  "value" : "https://petstore.swagger.io/v2/${sys:resource_path}"
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<asset_composite name="APIGatewayAssets" displayName="Assets for API Gateway" runtimeVersion="10.7" targetNamespace="http://namespaces.softwareag.com/webMethods/APIGateway" xmlns="http://namespaces.softwareag.com/acdl/1.0" xmlns:EDA="http://namespaces.softwareag.com/webMethods/EDA" xmlns:MWS="http://namespaces.softwareag.com/webMethods/MWS" xmlns:IS="http://namespaces.softwareag.com/webMethods/IS" xmlns:APIPORTAL="http://namespaces.softwareag.com/webMethods/APIPORTAL" xmlns:AgileApps="http://namespaces.softwareag.com/webMethods/AgileApps" xmlns:BROKER="http://namespaces.softwareag.com/webMethods/BROKER" xmlns:implDetails="http://namespaces.softwareag.com/acdl/implDetails" xmlns:UniversalMessaging="http://namespaces.softwareag.com/webMethods/UniversalMessaging" xmlns:TN="http://namespaces.softwareag.com/webMethods/TN" xmlns:RULES="http://namespaces.softwareag.com/webMethods/RULES" xmlns:BPM="http://namespaces.softwareag.com/webMethods/BPM" xmlns:Optimize="http://namespaces.softwareag.com/webMethods/Optimize">
+    <buildInfo name="BuildTimestamp" value="2020-06-14T13:57:24"/>
+    <asset name="API.fda68651-439d-4489-8368-df4226c99d90" displayName="Simple Inventory API[1.0.0]" isDeployable="true">
+        <implementation.generic type="API"/>
+        <dependsOn>APIGateway:Policy.9a167b6b-18d0-4706-90f0-38eeb97efba4</dependsOn>
+    </asset>
+    <asset name="Policy.9a167b6b-18d0-4706-90f0-38eeb97efba4" displayName="Policy For API Simple Inventory API[1.0.0]" isDeployable="true">
+        <implementation.generic type="Policy"/>
+        <dependsOn>APIGateway:PolicyAction.31eda6aa-0c20-4956-99f3-ccf40e284e31</dependsOn>
+        <dependsOn>APIGateway:PolicyAction.f5191743-bf82-400f-8ffe-20a98cefacd7</dependsOn>
+    </asset>
+    <asset name="PolicyAction.f5191743-bf82-400f-8ffe-20a98cefacd7" displayName="Policy Action [Enable HTTP / HTTPS] -&gt; Policy For API Simple Inventory API[1.0.0]" isDeployable="true">
+        <implementation.generic type="PolicyAction"/>
+    </asset>
+    <asset name="PolicyAction.31eda6aa-0c20-4956-99f3-ccf40e284e31" displayName="Policy Action [Straight Through Routing] -&gt; Policy For API Simple Inventory API[1.0.0]" isDeployable="true">
+        <implementation.generic type="PolicyAction"/>
+    </asset>
+</asset_composite>

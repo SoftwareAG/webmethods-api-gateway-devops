@@ -1,0 +1,43 @@
+{
+	"variables": [],
+	"info": {
+		"name": "APIGatewayDeployment",
+		"_postman_id": "06c61413-da13-6f9a-694d-75245e5ec6bd",
+		"description": "This Collection deploys the API to API Gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ImportAPI",
+			"request": {
+				"url": "{{url}}/rest/apigateway/archive?overwrite=*",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth}}",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/zip",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": "{{file_Loc}}"
+					}
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

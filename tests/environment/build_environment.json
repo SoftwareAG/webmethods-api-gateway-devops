@@ -1,0 +1,16 @@
+{
+  "id": "f313be5f-2640-22f7-36b6-3e79bba3c9e2",
+  "name": "BuildEnviroment",
+  "values": [
+	{
+      "enabled": true,
+      "key": "httpInvokeUrl",
+      "value": "http://localhost:5555",
+      "type": "text"
+    }
+  ],
+  "timestamp": 1587036498482,
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2020-04-16T11:32:40.730Z",
+  "_postman_exported_using": "Postman/5.5.5"
+}

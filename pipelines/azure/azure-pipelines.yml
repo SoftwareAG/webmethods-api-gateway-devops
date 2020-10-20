@@ -1,0 +1,101 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+parameters:
+- name: apiProject
+  type: string
+  default: 'petstore'
+
+stages:
+ - stage: "BuildAndDeploy"
+   jobs:
+     - job : "BuildAndDeployAPIsToAPIGateway"
+       steps:
+         - script: 'sudo npm install -g newman'
+           workingDirectory: '$(System.DefaultWorkingDirectory)'
+           displayName: 'Prerequisite'
+         - task: ArchiveFiles@2
+           inputs:
+            rootFolderOrFile: '$(System.DefaultWorkingDirectory)/apis/${{Parameters.apiProject}}'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: '$(System.DefaultWorkingDirectory)/$(Build.BuildId).zip'
+            replaceExistingArchive: true
+            verbose: true
+           displayName: 'Create the API Deployable from the flat representation'
+         - script: 'newman run utilities/import/ImportAPI.json  --reporters cli --env-var file_Loc=$(Build.BuildId).zip -e tests/environment/qa_environment.json'
+           workingDirectory: '$(System.DefaultWorkingDirectory)'
+           displayName: 'Import the Deployable To API Gateway'      
+         - publish :  '$(System.DefaultWorkingDirectory)/$(Build.BuildId).zip'
+ - stage: "Test"
+   jobs:
+     - job: "RunAPIInvokeTests"
+       steps:
+        - script: 'sudo npm install -g newman'
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+          displayName: 'Prerequisite'
+        - script: 'newman run test-suites/APITest.json  --reporters cli,junit --reporter-junit-export Results/junitReport.xml -e qa_environment.json'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/tests'
+          displayName: 'Run tests on the QA Machine'
+        - task: PublishBuildArtifacts@1
+          inputs:
+            pathToPublish: '$(System.DefaultWorkingDirectory)/tests/Results/junitReport.xml'
+            artifactName: unitTestReport
+          condition: always() 
+     - job: "RunPerformanceTests"
+       steps:
+         - script: 'sudo npm install -g newman'
+           workingDirectory: '$(System.DefaultWorkingDirectory)'
+           displayName: 'Prerequisite'
+         - script: 'newman run test-suites/PerformanceTest.json  --reporters cli,junit --reporter-junit-export Results/performanceReport.xml -e tests/environment/qa_environment.json -n 20'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/tests'
+           displayName: 'Run tests on the QA Machine'
+         - task: PublishBuildArtifacts@1
+           inputs:
+            pathToPublish: '$(System.DefaultWorkingDirectory)/tests/Results/performanceReport.xml'
+            artifactName: performanceReport
+           condition: always()
+ - stage: "Report"
+   condition: always()
+   jobs:
+     - job: "PublishReport"
+       steps:
+        - task: DownloadBuildArtifacts@0
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'unitTestReport'
+            downloadPath: '$(System.DefaultWorkingDirectory)'
+        - task: DownloadBuildArtifacts@0
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'performanceReport'
+            downloadPath: '$(System.DefaultWorkingDirectory)'
+        - task: PublishTestResults@2
+          inputs:
+            testResultsFormat: 'JUnit' 
+            testResultsFiles: '$(System.DefaultWorkingDirectory)/unitTestReport/*.xml'
+            testRunTitle: 'QA environment test failures'
+            publishRunAttachments: false
+        - task: PublishTestResults@2
+          inputs:
+            testResultsFormat: 'JUnit' 
+            testResultsFiles: '$(System.DefaultWorkingDirectory)/performanceReport/*.xml'
+            testRunTitle: 'QA environment test failures'
+            publishRunAttachments: false
+ - stage: "Rollout"
+   dependsOn: Test
+   condition: in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues') 
+   jobs:
+     - job: "PromoteToProd"
+       steps:
+        - script: 'sudo npm install -g newman'
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+          displayName: 'Prerequisite'
+        - script: 'newman run utilities/promotion/PromotionManagement.json  --reporters cli -g tests/environment/qa_environment.json -e $(System.DefaultWorkingDirectory)/apis/${{Parameters.apiProject}}/promotion_payload.json --env-var buildNumber=$(Build.BuildId)'
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+          displayName: 'Promotion'

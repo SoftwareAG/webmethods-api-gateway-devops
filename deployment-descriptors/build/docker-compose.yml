@@ -1,0 +1,12 @@
+version: "3.4"
+services:
+  buildimage:
+   image: "${apigateway_image}"
+   ports:
+    - "${apigateway_server_port}:5555"
+    - "${apigateway_ui_port}:9072"
+    - "${apigateway_es_port}:9240"
+   networks:
+    - apigw
+networks:
+   apigw:
