@@ -216,8 +216,17 @@ https://docs.microsoft.com/en-us/azure/devops/service-hooks/services/webhooks?vi
    
    
    ## Variable substitutions
-   With CI/CD, one of the common usecases is to make use of different values for configurations at different stages.  In this example, we have used stage specific aliases to demonstrate the use of different configurations for different environments. Aliases can be configured for different stages with different values and during promotion of the APIs, the respective stage specific alias values are used and promoted. In our petstore sample, we have use an routing Alias that can have different backend API endpoint values for different stages.  
+   With CI/CD, one of the common usecases is to make use of different values for configurations at different stages.  In this example, we have used stage specific aliases to demonstrate the use of different configurations for different environments. Aliases can be configured for different stages with different values and during promotion of the APIs, the respective stage specific alias values are used and promoted. In our petstore sample, we have use an routing Alias that can have different backend API endpoint values for different stages. 
+   
+# Notable extensions/references
 
+The following repositories either provide extensions to this project or leverage different tools/approaches for automation. 
+
+[webmethods-api-gateway-staging](https://github.com/thesse1/webmethods-api-gateway-staging) is a solution based on this repository that allows to extract API Gateway assets from a local development environment or a central DEV environment, add them to the Azure DevOps repository (Git) and automatically promote them to STAGE and PROD environments, controlled by Azure DevOps build pipelines. 
+
+[sagdevops-ansible-roles](https://github.com/SoftwareAG/sagdevops-ansible-roles) is a repository that provides a collection of ansible roles to support the automation of sysprep, installation, configuration for webMethods API Gateway and other Software AG webMethods products
+
+______________________
 These tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.
 
 Contact us at TECHcommunity if you have any questions.
